@@ -41,7 +41,7 @@ function Navbar(props) {
     return (
         <div className="navbar-container">
             <nav class="navbar navbar-expand-lg navbar-dark">
-                <a class="navbar-brand" href="#">
+                <a class="navbar-brand" href="/">
                     <LogoImage />
                 </a>
                 <div class="collapse navbar-collapse" id="navbarNavDropdown">
