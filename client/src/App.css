@@ -83,6 +83,7 @@ li {
   width: 100%;
   display: flex;
   flex-direction: column;
+  align-items: center;
   justify-content: space-between;
 }
 .footer {
@@ -101,24 +102,27 @@ li {
   justify-content: center;
   align-self: center;
 }
-img {
-  /* width: 100%; */
-  height: 10em;
-  background-image: linear-gradient(#0A9C91, black);
-}
 .city-row {
   /* border: 2px solid pink; */
   display: flex;
-  align-items: center;
-  justify-content: center;
-  background-image: linear-gradient(#0A9C91, black);
+  align-items: flex-end;
+  width: 100vw;
+  height: 24vh;
+  background-image: linear-gradient(#0A9C91 50%, black);
+  /* background-color: #0A9C91; */
 }
 col {
   display: flex;
   align-items: center;
   justify-content: center;
+  align-self: flex-start;
 }
-
+.city-image {
+  position: absolute;
+  width: 100%;
+  height: 17em;
+  overflow-x: hidden;
+}
 .eButton {
   font-family: 'Josefin Sans', sans-serif;
   z-index: 1;
@@ -178,11 +182,9 @@ col {
   to {align-self: flex-start;}
 } */
 .title-text {
-  font-size: 4em;
+  font-size: 6em;
   z-index: 1;
   font-family: 'Josefin Sans', sans-serif;
-  /* animation: swing 10s; */
-  /* animation-timing-function: ease; */
   animation: bobble 3s;
   transform: translate3d(20px, 20px, 0px);
   text-shadow: 1px 1px white;
@@ -230,7 +232,7 @@ col {
   font-size: 3em;
   z-index: 1;
   font-family: 'Josefin Sans', sans-serif;
-  align-self: flex-end;
+  /* align-self: flex-end; */
   padding-right: 5px;
   animation : gobble 2s;
   text-shadow: 1px 1px white;
@@ -286,9 +288,9 @@ col {
   align-items: center;
 }
 .bigscroll-row {
-  border: 4px solid black;
+  border: 4px solid blacgitk;
   height: 80.5vh;
-  overflow-y: auto; 
+  overflow-y: scroll; 
   overflow-x: hidden;
   width: 100vw;
   display: flex;

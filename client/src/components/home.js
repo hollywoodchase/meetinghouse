@@ -76,7 +76,6 @@ class App extends Component {
               </Col>
             </div>
           </div>
-
           <div className="city-row row">
             <CityImage />
           </div>
