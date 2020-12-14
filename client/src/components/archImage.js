@@ -4,7 +4,7 @@ import { Container } from "../components/grid";
 
 
 function ArchImage() {
-  return <img src={img} class="arch-image" alt="Img" />;
+  return <img src={img} class="arch-image" alt="Arch" />;
 }
 
 export default ArchImage;

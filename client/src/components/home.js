@@ -20,10 +20,13 @@ class App extends Component {
           <div className="scroll-rows row">
             <ArchImage />
             <div className="button-row row">
-              <h1 className="title-text">MeetingHouse Movers</h1>
-              <a className="eButton" href="/estimate">
-                <h4 className="button-text">Get an Estimate</h4>
-              </a>
+              <h1 className="title-text">Meetinghouse Movers</h1>
+              <div className="button-div">
+                <a className="eButton" href="/estimate">
+                  <h4 className="button-text">Get an Estimate</h4>
+                </a>
+              </div>
+
               <h3 className="tagline-text">We've Got You Covered</h3>
             </div>
             <div className="services-row">
