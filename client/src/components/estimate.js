@@ -5,8 +5,10 @@ import { TextArea } from "../components/form";
 import { Button } from 'react-bootstrap';
 import { withRouter } from 'react-router';
 import FountainImage from "./fountainImage.js";
-import DateSelector from "./date.js";
+import DatePicker from "react-datepicker";
+import moment from 'moment';
 import "../App.css";
+import "react-datepicker/dist/react-datepicker.css";
 
 class Estimate extends Component {
   constructor(props) {
@@ -20,9 +22,12 @@ class Estimate extends Component {
       name: "",
       email: "",
       phone: "",
-      details: ""
+      details: "",
+      realDate: "",
+      controlledDate: new Date()
     };
 
+    this.handleDateChange = this.handleDateChange.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
   }
 
@@ -67,6 +72,22 @@ class Estimate extends Component {
     console.log(this.state);
   };
 
+  handleDateChange = (date) => {
+    console.log("state: " + this.state.controlledDate);
+    console.log(date);
+    // console.log("event: " + event.target);
+    // let newDate = moment(date, "MM-DD-YYYY");
+    // console.log(this)
+    this.setState({
+      controlledDate: date
+    });
+    // this.props.onSetProperty('startDate', newDate)
+  }
+
+  handleFormSubmit = event => {
+    event.preventDefault();
+    console.log("submitted");
+  }
 
 
   render() {
@@ -74,6 +95,7 @@ class Estimate extends Component {
     const notmovingHidden = this.state.isMoving ? 'hidden' : 'other-row row';
     const otherHidden = this.state.isMoving ? 'other-row row' : 'hidden';
     const servicesHidden = (this.state.isPacking || this.state.isUnpacking || this.state.isMounting || this.state.isCrating) && !this.state.isMoving ? 'services-calendar' : 'hidden';
+    var newDate = new Date();
     // const scrollHidden = !(this.state.isPacking || this.state.isUnpacking || this.state.isMounting || this.state.isCrating) || (this.state.isMoving && (this.state.isPacking || this.state.isUnpacking || this.state.isMounting || this.state.isCrating)) ? 'scroll-text row' : 'hidden';
 
     return (
@@ -93,7 +115,7 @@ class Estimate extends Component {
               </div>
               <div className={movingHidden}>
                 <h2>When are you looking to move?</h2>
-                <DateSelector />
+                <DatePicker className="date-picker" selected={this.state.controlledDate} onChange={this.handleDateChange.bind(this)} onSelect={date => console.log("on select" + date)}/>
               </div>
             </div>
             <div className="other-row row">
@@ -111,17 +133,8 @@ class Estimate extends Component {
                 </div>
                 <div className={servicesHidden}>
                   <h5>When would you like to schedule this service?</h5>
-                  <DateSelector />
-                  {/* <div className="scroll-text">
-                    <h4>Scroll Down</h4>
-                    <h5>↓↓↓↓↓↓</h5>
-                  </div> */}
-
+                  <DatePicker className="date-picker" selected={newDate} onChange={date => console.log("on change" + date)} onSelect={date => console.log("on select" + date)}/>
                 </div>
-                {/* <div className={scrollHidden}>
-                  <h4>Scroll Down</h4>
-                  <h5>↓↓↓↓↓↓</h5>
-                </div> */}
 
                 <div className="right-checks">
                   <input type="checkbox" id="mounting-check" className="check" name="mounting" value="mounting" onClick={this.handleInputChange} />
