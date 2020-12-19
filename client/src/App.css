@@ -85,7 +85,7 @@ li {
   align-items: center;
   justify-content: space-between;
   overflow-x: hidden;
-  border: 2px solid green;
+  /* border: 2px solid green; */
 }
 .footer {
   text-align: center;
@@ -407,6 +407,8 @@ col {
   justify-content: center;
   overflow-y: scroll;
   overflow-x: hidden; */
+  /* background-image: url("images/philly-fountain.jpg"); */
+
 }
 .moving-row {
   background: #a7a7a7;
@@ -579,6 +581,7 @@ col {
 }
 .submit-button:hover {
   color: black;
+  cursor: pointer;
 }
 .services-calendar {
   display: flex;
@@ -611,7 +614,25 @@ col {
   justify-content: space-around;
 }
 .infoareas-row {
-display: flex;
-width: 100vw;
-justify-content: space-around;
+  display: flex;
+  width: 100vw;
+  justify-content: space-around;
+}
+.extra-info {
+  animation: fade-in 1.5s;
+  font-family: 'Josefin Sans', sans-serif;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  /* justify-content: space-around; */
+  border: 2px solid black;
+  background: #a7a7a7;
+  
+}
+.extra-info li {
+  font-size: 25px;
+}
+.extra-info Link {
+  color: black;
+  font-size: 30px;
 }

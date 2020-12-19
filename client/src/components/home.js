@@ -42,39 +42,39 @@ class App extends Component {
                       <MovingIcon />
                     </div>
                   </Link>
-                  <a href="/services">
+                  <Link to="services#bigcard2">
                     <div className="card2 card">
                       <h5 className="service">Packing</h5>
                       <PackingIcon />
                     </div>
-                  </a>
+                  </Link>
 
                 </div>
               </Col>
               <Col size="md-4">
                 <div className="mid-col card-col">
-                  <a href="/services">
+                <Link to="services#bigcard3">
                     <div className="card3 card">
                       <h5 className="service">Unpacking</h5>
                       <UnpackingIcon />
                     </div>
-                  </a>
+                  </Link>
                 </div>
               </Col>
               <Col size="md-4">
                 <div className="right-col card-col">
-                  <a href="/services">
-                    <div className="card5 card">
+                <Link to="services#bigcard4">
+                    <div className="card4 card">
                       <h5 className="service">Mounting</h5>
                       <MountingIcon />
                     </div>
-                  </a>
-                  <a href="#bigcard5">
-                    <div className="card4 card">
+                  </Link>
+                  <Link to="services#bigcard5">
+                    <div className="card5 card">
                       <h5 className="service">Crating</h5>
                       <CratingIcon />
                     </div>
-                  </a>
+                  </Link>
                 </div>
               </Col>
             </div>

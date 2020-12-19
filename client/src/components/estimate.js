@@ -6,6 +6,7 @@ import { Button } from 'react-bootstrap';
 import { withRouter } from 'react-router';
 import FountainImage from "./fountainImage.js";
 import DatePicker from "react-datepicker";
+import { HashLink as Link } from 'react-router-hash-link';
 import moment from 'moment';
 import "../App.css";
 import "react-datepicker/dist/react-datepicker.css";
@@ -95,6 +96,7 @@ class Estimate extends Component {
     const notmovingHidden = this.state.isMoving ? 'hidden' : 'other-row row';
     const otherHidden = this.state.isMoving ? 'other-row row' : 'hidden';
     const servicesHidden = (this.state.isPacking || this.state.isUnpacking || this.state.isMounting || this.state.isCrating) && !this.state.isMoving ? 'services-calendar' : 'hidden';
+    const extraHidden = (this.state.isPacking || this.state.isUnpacking || this.state.isMounting || this.state.isCrating) && this.state.isMoving ? 'extra-info row' : 'hidden';
     var newDate = new Date();
     // const scrollHidden = !(this.state.isPacking || this.state.isUnpacking || this.state.isMounting || this.state.isCrating) || (this.state.isMoving && (this.state.isPacking || this.state.isUnpacking || this.state.isMounting || this.state.isCrating)) ? 'scroll-text row' : 'hidden';
 
@@ -133,9 +135,8 @@ class Estimate extends Component {
                 </div>
                 <div className={servicesHidden}>
                   <h5>When would you like to schedule this service?</h5>
-                  <DatePicker className="date-picker" selected={newDate} onChange={date => console.log("on change" + date)} onSelect={date => console.log("on select" + date)}/>
+                  <DatePicker className="date-picker" selected={this.state.controlledDate} onChange={this.handleDateChange.bind(this)} onSelect={date => console.log("on select" + date)}/>
                 </div>
-
                 <div className="right-checks">
                   <input type="checkbox" id="mounting-check" className="check" name="mounting" value="mounting" onClick={this.handleInputChange} />
                   <label for="mounting-check" className="mounting-text">Mounting</label>
@@ -143,6 +144,13 @@ class Estimate extends Component {
                   <label for="crating-check" className="crating-text">Crating</label>
                 </div>
               </div>
+            </div>
+            <div className={extraHidden}>
+              <h1>Remember:</h1>
+              <ul>
+                <li><Link to="services#bigcard1">Packing</Link> and <Link to="services#bigcard5">Crating</Link> will be scheduled about 1-2 days BEFORE the moving date</li>
+                <li><Link to="services#bigcard3">Unpacking</Link> and <Link to="services#bigcard4">Mounting</Link> will be scheduled 1-2 days AFTER your moving date</li>
+              </ul>
             </div>
             <div className="details-row row">
               <div className="basicinfo-row row">

@@ -27,7 +27,7 @@ class Services extends Component {
                                     </a>
                                 </div>
                             </div>
-                            <div className="bigcard bigcard2" id="bigcard1">
+                            <div className="bigcard bigcard2" id="bigcard2">
                                 <BigPackingIcon />
                                 <div className="text-area">
                                     <h3>Packing</h3>
@@ -37,7 +37,7 @@ class Services extends Component {
                                     </a>
                                 </div>
                             </div>
-                            <div className="bigcard bigcard3" id="bigcard1">
+                            <div className="bigcard bigcard3" id="bigcard3">
                                 <BigUnpackingIcon />
                                 <div className="text-area">
                                     <h3>Unpacking</h3>
@@ -47,7 +47,7 @@ class Services extends Component {
                                     </a>
                                 </div>
                             </div>
-                            <div className="bigcard bigcard4" id="bigcard1">
+                            <div className="bigcard bigcard4" id="bigcard4">
                                 <BigMountingIcon />
                                 <div className="text-area">
                                     <h3>Mounting</h3>
@@ -57,7 +57,7 @@ class Services extends Component {
                                     </a>
                                 </div>
                             </div>
-                            <div className="bigcard bigcard5" id="bigcard1">
+                            <div className="bigcard bigcard5" id="bigcard5">
                                 <BigCratingIcon />
                                 <div className="text-area">
                                     <h3>Crating</h3>
