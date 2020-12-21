@@ -105,25 +105,55 @@ class Estimate extends Component {
     console.log("name: " + name);
 
     if (name === "returning") {
-      this.state.returning = value;
+      this.setState({
+        returning: value
+      });
+      // this.state.returning = value;
     } else if (name === "currentElevator") {
-      this.state.currentElevator = value;
+      this.setState({
+        currentElevator: value
+      });
+      // this.state.currentElevator = value;
     } else if (name === "current") {
-      this.state.current = value;
+      this.setState({
+        current: value
+      });
+      // this.state.current = value;
     } else if (name === "destination") {
-      this.state.destination = value;
+      this.setState({
+        destination: value
+      });
+      // this.state.destination = value;
     } else if (name === "currentType") {
-      this.state.currentType = value;
+      this.setState({
+        currentType: value
+      });
+      // this.state.currentType = value;
     } else if (name === "destinationType") {
-      this.state.destinationType = value;
+      this.setState({
+        destinationType: value
+      });
+      // this.state.destinationType = value;
     } else if (name === "currentElevator") {
-      this.state.currentElevator = value;
+      this.setState({
+        currentElevator: value
+      });
+      // this.state.currentElevator = value;
     } else if (name === "destinationElevator") {
-      this.state.destinationElevator = value;
-    } else if (name = "currentElevatorTime") {
-      this.state.currentElevatorTime = value;
-    } else if (name = "destinationElevatorTime") {
-      this.destinationElevatorTime = value;
+      this.setState({
+        destinationElevator: value
+      });
+      // this.state.destinationElevator = value;
+    } else if (name === "currentElevatorTime") {
+      this.setState({
+        currentElevatorTime: value
+      });
+      // this.state.currentElevatorTime = value;
+    } else if (name === "destinationElevatorTime") {
+      this.setState({
+        destinationElevatorTime: value
+      });
+      // this.destinationElevatorTime = value;
     }
 
     this.setState({
