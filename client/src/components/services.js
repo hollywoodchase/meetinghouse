@@ -1,7 +1,5 @@
-import React, { Component } from 'react'
-import { Route, Link } from 'react-router-dom'
-import { Col, Row, Container } from "../components/grid";
-import axios from 'axios'
+import React, { Component } from 'react';
+import { Container } from "../components/grid";
 import BigMovingIcon from "./bigIcons/movingIcon";
 import BigPackingIcon from "./bigIcons/packingIcon";
 import BigUnpackingIcon from "./bigIcons/unpackingIcon";

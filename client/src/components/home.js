@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import '../App.css';
-import { Col, Row, Container } from "../components/grid";
+import { Col, Container } from "../components/grid";
 import CityImage from "./cityImage.js";
 import MovingIcon from "./icons/movingIcon";
 import PackingIcon from "./icons/packingIcon";
@@ -8,7 +8,6 @@ import UnpackingIcon from "./icons/unpackingIcon";
 import CratingIcon from "./icons/cratingIcon";
 import MountingIcon from "./icons/mountingIcon";
 import ArchImage from "./archImage.js";
-import axios from 'axios';
 import { withRouter } from 'react-router';
 import { HashLink as Link } from 'react-router-hash-link';
 

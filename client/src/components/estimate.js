@@ -1,12 +1,11 @@
 import React, { Component } from "react";
-import API from "../utils/API";
-import { Col, Row, Container } from "../components/grid";
+import { Container } from "../components/grid";
 import { TextArea } from "../components/form";
-import { Button } from 'react-bootstrap';
 import { withRouter } from 'react-router';
 import FountainImage from "./fountainImage.js";
 import DatePicker from "react-datepicker";
 import { HashLink as Link } from 'react-router-hash-link';
+import emailjs from 'emailjs-com';
 import moment from 'moment';
 import "../App.css";
 import "react-datepicker/dist/react-datepicker.css";
@@ -16,6 +15,7 @@ class Estimate extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      controlledDate: new Date(),
       isMoving: false,
       isPacking: false,
       isUnpacking: false,
@@ -24,18 +24,22 @@ class Estimate extends Component {
       name: "",
       email: "",
       phone: "",
-      details: "",
+      realDate: "",
       returning: "",
       current: "",
-      destination: "",
-      controlledDate: new Date(),
-      realDate: "",
       currentType: "",
-      destinationType: "",
+      currentFloor: "",
       currentElevator: "",
-      destinationElevator: "",
       currentElevatorTime: "",
-      destinationElevatorTime: ""
+      currentBedrooms: "",
+      destination: "",
+      destinationType: "",
+      destinationFloor: "",
+      destinationElevator: "",
+      destinationElevatorTime: "",
+      special: "",
+      boxes: "",
+      details: ""
     };
 
     this.handleDateChange = this.handleDateChange.bind(this);
@@ -46,6 +50,9 @@ class Estimate extends Component {
   componentDidMount() {
   }
 
+  sendMessage(event) {
+    event.preventDefault();
+  }
 
 
   handleInputChange = event => {
@@ -55,27 +62,28 @@ class Estimate extends Component {
 
 
 
-    if (name === 'moving' && this.state.isMoving) {
-      this.state.isMoving = false;
-    } else if (name === 'moving') {
-      this.state.isMoving = true;
-    } else if (name === 'packing' && this.state.isPacking) {
-      this.state.isPacking = false;
+    if (name === 'moving') {
+      this.setState({
+        isMoving: value
+      });
+      // this.state.isMoving = false;
     } else if (name === 'packing') {
-      this.state.isPacking = true;
-    } else if (name === 'unpacking' && this.state.isUnpacking) {
-      this.state.isUnpacking = false;
+      this.setState({
+        isPacking: value
+      });
     } else if (name === 'unpacking') {
-      this.state.isUnpacking = true;
-    } else if (name === 'mounting' && this.state.isMounting) {
-      this.state.isMounting = false;
+      this.setState({
+        isUnpacking: value
+      });
     } else if (name === 'mounting') {
-      this.state.isMounting = true;
+      this.setState({
+        isMounting: value
+      });
     } else if (name === 'crating' && this.state.isCrating) {
-      this.state.isCrating = false;
-    } else if (name === 'crating') {
-      this.state.isCrating = true;
-    }
+      this.setState({
+        isCrating: value
+      });
+    } 
 
     this.setState({
       [name]: value
@@ -87,10 +95,12 @@ class Estimate extends Component {
   handleDateChange = (date) => {
     console.log("state: " + this.state.controlledDate);
     console.log(date);
+    var dateFormatted = moment(date).format("MM-DD-YYYY"); 
     this.setState({
-      controlledDate: date
+      controlledDate: date,
+      realDate: dateFormatted
     });
-    this.state.realDate = date;
+    // this.state.realDate = date;
     console.log(this.state);
     // this.props.onSetProperty('startDate', newDate)
   }
@@ -133,12 +143,20 @@ class Estimate extends Component {
       this.setState({
         destinationType: value
       });
+    } else if (name === "currentFloor") {
+      this.setState({
+        currentType: value
+      });
       // this.state.destinationType = value;
     } else if (name === "currentElevator") {
       this.setState({
         currentElevator: value
       });
       // this.state.currentElevator = value;
+    } else if (name === "currentType") {
+      this.setState({
+        currentType: value
+      });
     } else if (name === "destinationElevator") {
       this.setState({
         destinationElevator: value
@@ -169,6 +187,41 @@ class Estimate extends Component {
     event.preventDefault();
     console.log("submitted");
     console.log(this.state);
+
+    var templateParams = {
+      controlledDate: new Date(),
+      isMoving: this.state.isMoving,
+      isPacking: this.state.isPacking,
+      isUnpacking: this.state.isUnpacking,
+      isMounting: this.state.isMounting,
+      isCrating: this.state.isCrating,
+      name: this.state.name,
+      email: this.state.email,
+      phone: this.state.phone,
+      realDate: this.state.realDate,
+      returning: this.state.returning,
+      current: this.state.current,
+      currentType: this.state.currentType,
+      currentFloor: this.state.currentFloor,
+      currentElevator: this.state.currentElevator,
+      currentElevatorTime: this.state.currentElevatorTime,
+      currentBedrooms: this.state.currentBedrooms,
+      destination: this.state.destination,
+      destinationType: this.state.destinationType,
+      destnationFloor: this.state.destinationFloor,
+      destinationElevator: this.state.destinationElevator,
+      destinationElevatorTime: this.state.destinationElevatorTime,
+      special: this.state.special,
+      boxes: this.state.boxes,
+      details: this.state.details
+    };
+
+    emailjs.send('service_sjr0rtg', 'template_6anpryf', templateParams, "user_qTQVb1Mi2sLqR3u3F6FM2")
+      .then(function (response) {
+        console.log('SUCCESS!', response.status, response.text);
+      }, function (err) {
+        console.log('FAILED...', err);
+      });
   }
 
 
@@ -180,9 +233,6 @@ class Estimate extends Component {
     const extraHidden = (this.state.isPacking || this.state.isUnpacking || this.state.isMounting || this.state.isCrating) && this.state.isMoving ? 'extra-info row' : 'hidden';
     const movinginfoHidden = this.state.isMoving ? 'movinginfo-row row' : 'hidden';
     const movinginfotitleHidden = this.state.isMoving ? 'movinginfo-title row' : 'hidden';
-    const currentElevatorTimeHidden = this.state.currentElevator ? 'infoq current-elevator-timeq row' : 'hidden';
-    const destinationElevatorTimeHidden = this.state.destinationElevator ? 'infoq destination-elevator-timeq' : 'hidden';
-    var newDate = new Date();
     // const scrollHidden = !(this.state.isPacking || this.state.isUnpacking || this.state.isMounting || this.state.isCrating) || (this.state.isMoving && (this.state.isPacking || this.state.isUnpacking || this.state.isMounting || this.state.isCrating)) ? 'scroll-text row' : 'hidden';
 
     return (
@@ -198,7 +248,7 @@ class Estimate extends Component {
             <div className="moving-row row">
               <div className="moving-q">
                 <input type="checkbox" id="moving-check" name="moving" value="moving" onClick={this.handleInputChange} />
-                <label for="moving-check" className="moving-text">Moving - taking your stuff from A to B</label>
+                <label htmlFor="moving-check" className="moving-text">Moving - taking your stuff from A to B</label>
               </div>
               <div className={movingHidden}>
                 <h2>When are you looking to move?</h2>
@@ -213,10 +263,10 @@ class Estimate extends Component {
               <div className="boxes">
                 <div className="left-checks">
                   <input type="checkbox" id="packing-check" className="check" name="packing" value="packing" onClick={this.handleInputChange} />
-                  <label for="packing-check" className="packing-text">Packing</label>
+                  <label htmlFor="packing-check" className="packing-text">Packing</label>
 
                   <input type="checkbox" id="unpacking-check" className="check" name="unpacking" value="unpacking" onClick={this.handleInputChange} />
-                  <label for="unpacking-check" className="unpacking-text">Unpacking</label>
+                  <label htmlFor="unpacking-check" className="unpacking-text">Unpacking</label>
                 </div>
                 <div className={servicesHidden}>
                   <h5>When would you like to schedule this service?</h5>
@@ -224,9 +274,9 @@ class Estimate extends Component {
                 </div>
                 <div className="right-checks">
                   <input type="checkbox" id="mounting-check" className="check" name="mounting" value="mounting" onClick={this.handleInputChange} />
-                  <label for="mounting-check" className="mounting-text">Mounting</label>
+                  <label htmlFor="mounting-check" className="mounting-text">Mounting</label>
                   <input type="checkbox" id="crating-check" className="check" name="crating" value="crating" onClick={this.handleInputChange} />
-                  <label for="crating-check" className="crating-text">Crating</label>
+                  <label htmlFor="crating-check" className="crating-text">Crating</label>
                 </div>
               </div>
             </div>
@@ -303,6 +353,7 @@ class Estimate extends Component {
                   </label>
                   </div>
                 </div>
+                <br></br>
                 <div className="infoq addressq row">
                   <div className="current-add add">
                     <h2>Where are we moving you out of?</h2>
@@ -330,6 +381,7 @@ class Estimate extends Component {
                     />
                   </div>
                 </div>
+                <br></br>
                 <div className="infoq current-typeq row">
                   <h2>Which of these best describes your CURRENT address?</h2>
                   <div className="radio">
@@ -364,8 +416,9 @@ class Estimate extends Component {
                   </label>
                   </div>
                 </div>
-                <div className="infoq current-floorq">
-                  <h2>Which floor is your CURRENT address on?</h2>
+                <br></br>
+                <div className="infoq infoq-white current-floorq">
+                  <h2>How many flights of stairs will we be climbing at your CURRENT address?</h2>
                   <TextArea
                     id="currentFloor"
                     name="currentFloor"
@@ -376,6 +429,7 @@ class Estimate extends Component {
                     rows={1}
                   />
                 </div>
+                <br></br>
                 <div className="infoq current-elevatorq row">
                   <h2>Does your CURRENT address have an elevator?</h2>
                   <div className="radio">
@@ -400,7 +454,8 @@ class Estimate extends Component {
                   </label>
                   </div>
                 </div>
-                <div className={'infoq current-elevator-timeq row'}>
+                <br></br>
+                <div className={'infoq infoq-white current-elevator-timeq row'}>
                   <h2>(Optional) Is there a time restriction with the elevator?</h2>
                   <TextArea
                     id="currentElevatorTime"
@@ -412,7 +467,21 @@ class Estimate extends Component {
                     rows={1}
                   />
                 </div>
-                <div className="infoq destination-typeq row">
+                <br></br>
+                <div className="infoq current-bedroomsq row">
+                  <h2>How many bedrooms does your CURRENT address have?</h2>
+                  <TextArea
+                    id="currentBedrooms"
+                    name="currentBedrooms"
+                    onChange={this.handleInputChange.bind(this)}
+                    placeholder="##"
+                    value={this.state.currentBedrooms}
+                    style={{ width: "100%" }}
+                    rows={1}
+                  />
+                </div>
+                <br></br>
+                <div className="infoq infoq-white destination-typeq row">
                   <h2>Which of these best describes your NEW address?</h2>
                   <div className="radio">
                     <label>
@@ -446,18 +515,101 @@ class Estimate extends Component {
                   </label>
                   </div>
                 </div>
+                <br></br>
                 <div className="infoq destination-floorq">
-
+                  <h2>How many flights of stairs will we be climbing at your NEW address?</h2>
+                  <TextArea
+                    id="destinationFloor"
+                    name="destinationFloor"
+                    onChange={this.handleInputChange.bind(this)}
+                    placeholder="##"
+                    value={this.state.destinationFloor}
+                    style={{ width: "100%" }}
+                    rows={1}
+                  />
                 </div>
-                <div className="infoq detailsq">
-                  <h2>Please provide as many details as possible about what items we will be working with</h2>
-                  <TextArea className="details" />
+                <br></br>
+                <div className="infoq infoq-white destination-elevatorq row">
+                  <h2>Does your NEW address have an elevator?</h2>
+                  <div className="radio">
+                    <label>
+                      <input
+                        type="radio"
+                        value={true}
+                        name="destinationElevator"
+                        default-checked={this.state.destinationElevator}
+                        onChange={this.handleDetailChange}
+                      />Yes
+                  </label>
+                    <br></br>
+                    <label>
+                      <input
+                        type="radio"
+                        value={false}
+                        name="destinationElevator"
+                        default-checked={!this.state.destinationElevator}
+                        onChange={this.handleDetailChange}
+                      />No
+                  </label>
+                  </div>
                 </div>
+                <br></br>
+                <div className={'infoq destination-elevator-timeq row'}>
+                  <h2>(Optional) Is there a time restriction with the elevator?</h2>
+                  <TextArea
+                    id="destinationElevatorTime"
+                    name="destinationElevatorTime"
+                    onChange={this.handleInputChange.bind(this)}
+                    placeholder="Elevator time"
+                    value={this.state.destinationElevatorTime}
+                    style={{ width: "100%" }}
+                    rows={1}
+                  />
+                </div>
+                <br></br>
+                <div className="infoq boxesq">
+                  <h2>About how many boxes will we be moving?</h2>
+                  <TextArea
+                    id="boxes"
+                    name="boxes"
+                    onChange={this.handleInputChange.bind(this)}
+                    placeholder="##"
+                    value={this.state.boxes}
+                    style={{ width: "100%" }}
+                    rows={1}
+                  />
+                </div>
+              </div>
+              <br></br>
+              <div className="infoq infoq-white specialq">
+                <h2>Are there any items that need special care?</h2>
+                <TextArea
+                  id="special"
+                  name="special"
+                  onChange={this.handleInputChange.bind(this)}
+                  placeholder="Special care items"
+                  value={this.state.special}
+                  style={{ width: "100%" }}
+                  rows={3}
+                />
+              </div>
+              <br></br>
+              <div className="infoq detailsq">
+                <h2>Is there anything else we should know about the move?</h2>
+                <TextArea
+                  id="details"
+                  name="details"
+                  onChange={this.handleInputChange.bind(this)}
+                  placeholder="Details"
+                  value={this.state.details}
+                  style={{ width: "100%" }}
+                  rows={3}
+                />
               </div>
             </div>
             <div className="btn-row row">
               <div className="button-div">
-                <a className="submit-button" onClick={this.handleFormSubmit}>
+                <a className="submit-button" href="." onClick={this.handleFormSubmit}>
                   <h4 className="button-text">Get Your Estimate</h4>
                 </a>
               </div>

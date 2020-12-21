@@ -648,9 +648,6 @@ col {
   justify-content: center;
   font-size: 25px;
 }
-.details {
-  width: 75vw;
-}
 .magnifyingglass-icon {
   width: 5%;
   /* border: 2px solid yellow; */
@@ -665,20 +662,29 @@ col {
   display: flex;
   justify-content: center;
   margin: 20px 20px 20px 0;
-  border: 2px solid white;
+  /* border: 2px solid white; */
 }
 .radio {
   margin: 0 5px 0 5px;
 }
 .infoq {
-  border: 2px solid yellow;
+  /* border: 2px solid yellow; */
   width: 100vw;
   display: flex;
   justify-content: space-around;
   align-items: center;
+  margin: 10px 0 10px 0;
 }
 .add {
   width: 40%;
-  border: 2px solid green;
+  /* border: 2px solid green; */
   text-align: center;
+}
+.infoq-white {
+  color: white;
+  text-shadow: 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
+}
+.infoq-white .radio {
+  color: black;
+  text-shadow: none;
 }

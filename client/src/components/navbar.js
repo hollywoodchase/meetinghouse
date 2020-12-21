@@ -40,20 +40,20 @@ import '../App.css'
 function Navbar(props) {
     return (
         <div className="navbar-container">
-            <nav class="navbar navbar-expand-lg navbar-dark">
-                <a class="navbar-brand" href="/">
+            <nav className="navbar navbar-expand-lg navbar-dark">
+                <a className="navbar-brand" href="/">
                     <LogoImage />
                 </a>
-                <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                    <ul class="navbar-nav">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                <div className="collapse navbar-collapse" id="navbarNavDropdown">
+                    <ul className="navbar-nav">
+                        <li className="nav-item active">
+                            <a className="nav-link" href="/">Home <span className="sr-only">(current)</span></a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/estimate">Estimates</a>
+                        <li className="nav-item">
+                            <a className="nav-link" href="/estimate">Estimates</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/services">Services</a>
+                        <li className="nav-item">
+                            <a className="nav-link" href="/services">Services</a>
                         </li>
                     </ul>
                 </div>

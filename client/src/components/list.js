@@ -10,7 +10,7 @@ const List = (props) => {
     <ul>
       <h2 className='list-head'>Meetinghouse Movers</h2>
       <div>
-        <table class="table">
+        <table className="table">
           <thead className="thead-dark">
             <tr>
               <th scope="col">#</th>
@@ -29,7 +29,7 @@ const List = (props) => {
           count++;
           return (
             <div>
-              <table key={repo.id} class="table-data table">
+              <table key={repo.id} className="table-data table">
                 <tbody>
                   <tr>
                     <th scope="row">{count}</th>

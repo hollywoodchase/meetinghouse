@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
-import { Route, Link } from 'react-router-dom'
-import { Col, Row, Container } from "../components/grid";
+import { Col, Container } from "../components/grid";
 import '../App.css'
-import axios from 'axios'
 
 class Footer extends Component {
 
