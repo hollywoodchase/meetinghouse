@@ -606,12 +606,9 @@ col {
   background: #0A9C91;
   /* border: 2px solid orange; */
   display: flex;
-  justify-content: center;
-  /* height: 30vh; */
-  /* display: flex;
+  justify-content: space-around;
+  text-align: center; 
   align-items: center;
-  text-align: center; */
-  /* justify-content: center; */
   font-family: 'Josefin Sans', sans-serif;
   width: 100vw;
 }
@@ -760,4 +757,14 @@ col {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+.mount-row {
+  display: flex;
+  justify-content: space-around;
+  text-align: center;
+  /* border: 2px solid white; */
+  align-items: center;
+}
+.mount-row h2 {
+  text-align: right;
 }

@@ -314,10 +314,11 @@ class Estimate extends Component {
     const otherInfoHidden = this.state.isPacking || this.state.isUnpacking || this.state.isMounting || this.state.isCrating || this.state.isMoving ? 'otherinfo-row row' : 'hidden';
     const packHidden = this.state.isPacking ? 'pack-row row' : 'hidden';
     const unpackHidden = this.state.isUnpacking ? 'unpack-row row' : 'hidden';
-    const mountDetailsHidden = this.state.isMounting ? 'mount-row row' : 'hidden';
-    const mountAddressHidden = this.state.isMounting && (!this.state.isMoving && !this.state.isUnpacking) ? 'mount-addressq row' : 'hidden';
+    const mountHidden = this.state.isMounting ? 'mount-row row' : 'hidden';
+    const mountDetailsHidden = this.state.isMounting ? 'infoq infoq-white mount-detailsq row' : 'hidden';
+    const mountAddressHidden = this.state.isMounting && (!this.state.isMoving && !this.state.isUnpacking) ? ' infoq mount-addressq row' : 'hidden';
     const crateHidden = this.state.isCrating ? 'crate-row row' : 'hidden';
-    const crateAddressHidden = this.state.isCrating && !this.state.isMoving && !this.state.isPacking? 'infoq crate-addressq' : 'hidden';
+    const crateAddressHidden = this.state.isCrating && !this.state.isMoving && !this.state.isPacking ? 'infoq crate-addressq' : 'hidden';
     const destinationElevatorTimeHidden = this.state.destinationElevator === "true" ? 'infoq destination-elevator-timeq row' : 'hidden';
     const currentElevatorTimeHidden = this.state.currentElevator === "true" ? 'infoq infoq-white current-elevator-timeq row' : 'hidden';
     const movingDetailsHidden = this.state.isMoving && (this.state.isPacking || this.state.isUnpacking || this.state.isMounting || this.state.isCrating) ? 'hidden' : 'infoq detailsq';
@@ -327,8 +328,11 @@ class Estimate extends Component {
     const packBedroomsHidden = this.state.isMoving && this.state.isPacking ? 'hidden' : "infoq pack-bedroomsq row";
     const unpackBedroomsHidden = this.state.isMoving && this.state.isUnpacking ? 'hidden' : "infoq unpack-bedroomsq row";
     const unpackAddressHidden = this.state.isMoving && this.state.isUnpacking ? 'hidden' : "infoq unpack-addressq row";
-    const multipleServicesHidden = (this.state.isPacking || this.state.isCrating) && (this.state.isUnpacking || this.state.isMounting) ? 'services-calendar' : 'hidden';
+    const multipleServicesHidden = (this.state.isPacking || this.state.isCrating) && (this.state.isUnpacking || this.state.isMounting) && !this.state.isMoving ? 'services-calendar' : 'hidden';
     const unpackBoxesHidden = this.state.isUnpacking && (!this.state.isMoving && !this.state.isPacking) ? 'unpack-boxesq' : 'hidden';
+    const mmcDetailsHidden = this.state.isMoving && this.state.isMounting && this.state.isCrating ? 'infoq detailsq' : 'hidden';
+    const mumDetailsHidden = this.state.isMoving && this.state.isUnpacking && this.state.isMounting && !this.state.isCrating ? 'infoq detailsq' : 'hidden';
+    const packMoveHidden = this.state.isMoving && this.state.isPacking ? 'hidden' : "infoq pack-detailsq"; 
 
     return (
 
@@ -452,31 +456,6 @@ class Estimate extends Component {
                   </div>
                 </div>
                 <div className={movinginfoHidden}>
-                  <div className="infoq returningq row">
-                    {/* <h2>Have you used our services in the past?</h2>
-                  <div className="radio">
-                    <label>
-                      <input
-                        type="radio"
-                        value={true}
-                        name="returning"
-                        default-checked={this.state.returning}
-                        onChange={this.handleDetailChange}
-                      />Yes
-                  </label>
-                    <br></br>
-                    <label>
-                      <input
-                        type="radio"
-                        value={false}
-                        name="returning"
-                        default-checked={!this.state.returning}
-                        onChange={this.handleDetailChange}
-                      />No
-                  </label>
-                  </div> */}
-                  </div>
-                  <br></br>
                   <div className="infoq addressq row">
                     <div className="current-add add">
                       <h2>Where are we moving you out of?</h2>
@@ -769,7 +748,7 @@ class Estimate extends Component {
                     />
                   </div>
                   <br></br>
-                  <div className="infoq pack-detailsq">
+                  <div className={packMoveHidden}>
                     <h2>Is there anything else we should know?</h2>
                     <TextArea
                       id="details"
@@ -876,22 +855,22 @@ class Estimate extends Component {
                   />
                 </div>
               </div>
-              <div className={mountAddressHidden}>
-                <h2>At what address will we be MOUNTING?</h2>
-                <TextArea
-                  id="destination"
-                  name="destination"
-                  onChange={this.handleInputChange.bind(this)}
-                  placeholder="Enter your new address"
-                  required
-                  value={this.state.destination}
-                  style={{ width: "100%" }}
-                  rows={3}
-                />
-              </div>
-              <br></br>
-              <div className={mountDetailsHidden}>
-                <div className="infoq infoq-white mount-detailsq">
+              <div className={mountHidden}>
+                <div className={mountAddressHidden}>
+                  <h2>At what address will we be MOUNTING?</h2>
+                  <TextArea
+                    id="destination"
+                    name="destination"
+                    onChange={this.handleInputChange.bind(this)}
+                    placeholder="Enter your new address"
+                    required
+                    value={this.state.destination}
+                    style={{ width: "100%" }}
+                    rows={3}
+                  />
+                </div>
+                <br></br>
+                <div className={mountDetailsHidden}>
                   <h2>Which items will we be MOUNTING?</h2>
                   <TextArea
                     id="mountDetails"
@@ -899,6 +878,34 @@ class Estimate extends Component {
                     onChange={this.handleInputChange.bind(this)}
                     placeholder="Details"
                     value={this.state.mountDetails}
+                    style={{ width: "100%" }}
+                    rows={3}
+                  />
+                </div>
+              </div>
+              <div className="mmc-detailsq">
+                <div className={mmcDetailsHidden}>
+                  <h2>Is there anything else we should know about the move?</h2>
+                  <TextArea
+                    id="details"
+                    name="details"
+                    onChange={this.handleInputChange.bind(this)}
+                    placeholder="Details"
+                    value={this.state.details}
+                    style={{ width: "100%" }}
+                    rows={3}
+                  />
+                </div>
+              </div>
+              <div className="mum-detailsq">
+                <div className={mumDetailsHidden}>
+                  <h2>Is there anything else we should know about the move?</h2>
+                  <TextArea
+                    id="details"
+                    name="details"
+                    onChange={this.handleInputChange.bind(this)}
+                    placeholder="Details"
+                    value={this.state.details}
                     style={{ width: "100%" }}
                     rows={3}
                   />
