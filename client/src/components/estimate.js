@@ -16,6 +16,7 @@ class Estimate extends Component {
     super(props);
     this.state = {
       controlledDate: new Date(),
+      controlledDate2: new Date(),
       isMoving: false,
       isPacking: false,
       isUnpacking: false,
@@ -30,60 +31,105 @@ class Estimate extends Component {
       currentType: "",
       currentFloor: "",
       currentElevator: "",
+      currentElevatorQ: "",
       currentElevatorTime: "",
       currentBedrooms: "",
       destination: "",
       destinationType: "",
       destinationFloor: "",
       destinationElevator: "",
+      destinationElevatorQ: "",
       destinationElevatorTime: "",
       special: "",
       boxes: "",
-      details: ""
+      unpackBoxes: "",
+      details: "",
+      packBedrooms: "",
+      unpackBedrooms: "",
+      isMovingQ: "",
+      isPackingQ: "",
+      isUnpackingQ: "",
+      isMountingQ: "",
+      isCratingQ: ""
     };
 
     this.handleDateChange = this.handleDateChange.bind(this);
+    this.handleSecondDateChange = this.handleSecondDateChange.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleDetailChange = this.handleDetailChange.bind(this);
   }
-
-  componentDidMount() {
-  }
-
-  sendMessage(event) {
-    event.preventDefault();
-  }
-
 
   handleInputChange = event => {
     const target = event.target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
     const name = target.name;
 
-
-
     if (name === 'moving') {
       this.setState({
         isMoving: value
       });
-      // this.state.isMoving = false;
+      if (value) {
+        this.setState({
+          isMovingQ: "Yes"
+        });
+      } else if (!value) {
+        this.setState({
+          isMovingQ: "No"
+        });
+      }
     } else if (name === 'packing') {
       this.setState({
         isPacking: value
       });
+      if (value) {
+        this.setState({
+          isPackingQ: "Yes"
+        });
+      } else if (!value) {
+        this.setState({
+          isPackingQ: "No"
+        });
+      }
     } else if (name === 'unpacking') {
       this.setState({
         isUnpacking: value
       });
+      if (value) {
+        this.setState({
+          isUnpackingQ: "Yes"
+        });
+      } else if (!value) {
+        this.setState({
+          isUnpackingQ: "No"
+        });
+      }
     } else if (name === 'mounting') {
       this.setState({
         isMounting: value
       });
-    } else if (name === 'crating' && this.state.isCrating) {
+      if (value) {
+        this.setState({
+          isMountingQ: "Yes"
+        });
+      } else if (!value) {
+        this.setState({
+          isMountingQ: "No"
+        });
+      }
+    } else if (name === 'crating') {
       this.setState({
         isCrating: value
       });
-    } 
+      if (value) {
+        this.setState({
+          isCratingQ: "Yes"
+        });
+      } else if (!value) {
+        this.setState({
+          isCratingQ: "No"
+        });
+      }
+    }
 
     this.setState({
       [name]: value
@@ -95,14 +141,23 @@ class Estimate extends Component {
   handleDateChange = (date) => {
     console.log("state: " + this.state.controlledDate);
     console.log(date);
-    var dateFormatted = moment(date).format("MM-DD-YYYY"); 
+    var dateFormatted = moment(date).format("MM-DD-YYYY");
+
     this.setState({
       controlledDate: date,
       realDate: dateFormatted
     });
-    // this.state.realDate = date;
     console.log(this.state);
-    // this.props.onSetProperty('startDate', newDate)
+  }
+  handleSecondDateChange = (date) => {
+    console.log(date);
+    var dateFormatted = moment(date).format("MM-DD-YYYY");
+
+    this.setState({
+      controlledDate2: date,
+      secondDate: dateFormatted
+    });
+    console.log(this.state);
   }
 
   handleDetailChange = event => {
@@ -118,27 +173,18 @@ class Estimate extends Component {
       this.setState({
         returning: value
       });
-      // this.state.returning = value;
-    } else if (name === "currentElevator") {
-      this.setState({
-        currentElevator: value
-      });
-      // this.state.currentElevator = value;
     } else if (name === "current") {
       this.setState({
         current: value
       });
-      // this.state.current = value;
     } else if (name === "destination") {
       this.setState({
         destination: value
       });
-      // this.state.destination = value;
     } else if (name === "currentType") {
       this.setState({
         currentType: value
       });
-      // this.state.currentType = value;
     } else if (name === "destinationType") {
       this.setState({
         destinationType: value
@@ -147,12 +193,19 @@ class Estimate extends Component {
       this.setState({
         currentType: value
       });
-      // this.state.destinationType = value;
     } else if (name === "currentElevator") {
       this.setState({
         currentElevator: value
       });
-      // this.state.currentElevator = value;
+      if (value === "true") {
+        this.setState({
+          currentElevatorQ: "Yes"
+        });
+      } else if (value === "false") {
+        this.setState({
+          currentElevatorQ: "No"
+        });
+      }
     } else if (name === "currentType") {
       this.setState({
         currentType: value
@@ -161,17 +214,25 @@ class Estimate extends Component {
       this.setState({
         destinationElevator: value
       });
-      // this.state.destinationElevator = value;
+      if (value === "true") {
+        console.log(value);
+        this.setState({
+          destinationElevatorQ: "Yes"
+        });
+      } else if (value === "false") {
+        console.log(value);
+        this.setState({
+          destinationElevatorQ: "No"
+        });
+      }
     } else if (name === "currentElevatorTime") {
       this.setState({
         currentElevatorTime: value
       });
-      // this.state.currentElevatorTime = value;
     } else if (name === "destinationElevatorTime") {
       this.setState({
         destinationElevatorTime: value
       });
-      // this.destinationElevatorTime = value;
     }
 
     this.setState({
@@ -190,30 +251,44 @@ class Estimate extends Component {
 
     var templateParams = {
       controlledDate: new Date(),
+      controlledDate2: new Date(),
       isMoving: this.state.isMoving,
+      isMovingQ: this.state.isMovingQ,
       isPacking: this.state.isPacking,
+      isPackingQ: this.state.isPackingQ,
       isUnpacking: this.state.isUnpacking,
+      isUnpackingQ: this.state.isUnpackingQ,
       isMounting: this.state.isMounting,
+      isMountingQ: this.state.isMountingQ,
       isCrating: this.state.isCrating,
+      isCratingQ: this.state.isCratingQ,
       name: this.state.name,
       email: this.state.email,
       phone: this.state.phone,
       realDate: this.state.realDate,
+      secondDate: this.state.secondDate,
       returning: this.state.returning,
       current: this.state.current,
       currentType: this.state.currentType,
       currentFloor: this.state.currentFloor,
       currentElevator: this.state.currentElevator,
+      currentElevatorQ: this.state.currentElevatorQ,
       currentElevatorTime: this.state.currentElevatorTime,
       currentBedrooms: this.state.currentBedrooms,
       destination: this.state.destination,
       destinationType: this.state.destinationType,
-      destnationFloor: this.state.destinationFloor,
+      destinationFloor: this.state.destinationFloor,
       destinationElevator: this.state.destinationElevator,
+      destinationElevatorQ: this.state.destinationElevatorQ,
       destinationElevatorTime: this.state.destinationElevatorTime,
       special: this.state.special,
       boxes: this.state.boxes,
-      details: this.state.details
+      unpackBoxes: this.state.unpackBoxes,
+      details: this.state.details,
+      packBedrooms: this.state.packBedrooms,
+      unpackBedrooms: this.state.unpackBedrooms,
+      mountDetails: this.state.mountDetails,
+      crateDetails: this.state.crateDetails
     };
 
     emailjs.send('service_sjr0rtg', 'template_6anpryf', templateParams, "user_qTQVb1Mi2sLqR3u3F6FM2")
@@ -222,6 +297,9 @@ class Estimate extends Component {
       }, function (err) {
         console.log('FAILED...', err);
       });
+
+    alert("Your estimate has been submitted! We will respond in the next 24 hours");
+    window.location.reload();
   }
 
 
@@ -232,13 +310,29 @@ class Estimate extends Component {
     const servicesHidden = (this.state.isPacking || this.state.isUnpacking || this.state.isMounting || this.state.isCrating) && !this.state.isMoving ? 'services-calendar' : 'hidden';
     const extraHidden = (this.state.isPacking || this.state.isUnpacking || this.state.isMounting || this.state.isCrating) && this.state.isMoving ? 'extra-info row' : 'hidden';
     const movinginfoHidden = this.state.isMoving ? 'movinginfo-row row' : 'hidden';
-    const movinginfotitleHidden = this.state.isMoving ? 'movinginfo-title row' : 'hidden';
-    // const scrollHidden = !(this.state.isPacking || this.state.isUnpacking || this.state.isMounting || this.state.isCrating) || (this.state.isMoving && (this.state.isPacking || this.state.isUnpacking || this.state.isMounting || this.state.isCrating)) ? 'scroll-text row' : 'hidden';
+    const movinginfotitleHidden = this.state.isMoving || this.state.isPacking || this.state.isUnpacking || this.state.isMounting || this.state.isCrating ? 'movinginfo-title row' : 'hidden';
+    const otherInfoHidden = this.state.isPacking || this.state.isUnpacking || this.state.isMounting || this.state.isCrating || this.state.isMoving ? 'otherinfo-row row' : 'hidden';
+    const packHidden = this.state.isPacking ? 'pack-row row' : 'hidden';
+    const unpackHidden = this.state.isUnpacking ? 'unpack-row row' : 'hidden';
+    const mountDetailsHidden = this.state.isMounting ? 'mount-row row' : 'hidden';
+    const mountAddressHidden = this.state.isMounting && (!this.state.isMoving && !this.state.isUnpacking) ? 'mount-addressq row' : 'hidden';
+    const crateHidden = this.state.isCrating ? 'crate-row row' : 'hidden';
+    const crateAddressHidden = this.state.isCrating && !this.state.isMoving && !this.state.isPacking? 'infoq crate-addressq' : 'hidden';
+    const destinationElevatorTimeHidden = this.state.destinationElevator === "true" ? 'infoq destination-elevator-timeq row' : 'hidden';
+    const currentElevatorTimeHidden = this.state.currentElevator === "true" ? 'infoq infoq-white current-elevator-timeq row' : 'hidden';
+    const movingDetailsHidden = this.state.isMoving && (this.state.isPacking || this.state.isUnpacking || this.state.isMounting || this.state.isCrating) ? 'hidden' : 'infoq detailsq';
+    const boxesHidden = this.state.isPacking ? 'hidden' : 'infoq infoq-white boxesq';
+    const unpackSpecialHidden = this.state.isUnpacking && (this.state.isPacking || this.state.isCrating || this.state.isMounting) ? 'hidden' : "infoq infoq-white unpack-specialq";
+    const packAddressHidden = this.state.isMoving && this.state.isPacking ? 'hidden' : "infoq infoq-white pack-addressq row";
+    const packBedroomsHidden = this.state.isMoving && this.state.isPacking ? 'hidden' : "infoq pack-bedroomsq row";
+    const unpackBedroomsHidden = this.state.isMoving && this.state.isUnpacking ? 'hidden' : "infoq unpack-bedroomsq row";
+    const unpackAddressHidden = this.state.isMoving && this.state.isUnpacking ? 'hidden' : "infoq unpack-addressq row";
+    const multipleServicesHidden = (this.state.isPacking || this.state.isCrating) && (this.state.isUnpacking || this.state.isMounting) ? 'services-calendar' : 'hidden';
+    const unpackBoxesHidden = this.state.isUnpacking && (!this.state.isMoving && !this.state.isPacking) ? 'unpack-boxesq' : 'hidden';
 
     return (
 
       <Container fluid className='estimates-container'>
-        {/* <Example /> */}
         <div className="form-rows row">
           <FountainImage />
           <div className="question-row row">
@@ -271,6 +365,10 @@ class Estimate extends Component {
                 <div className={servicesHidden}>
                   <h5>When would you like to schedule this service?</h5>
                   <DatePicker className="date-picker" selected={this.state.controlledDate} onChange={this.handleDateChange.bind(this)} onSelect={date => console.log("on select" + date)} />
+                </div>
+                <div className={multipleServicesHidden}>
+                  <h5>When would you like to schedule the second day of service?</h5>
+                  <DatePicker className="date-picker2" selected={this.state.controlledDate2} onChange={this.handleSecondDateChange.bind(this)} onSelect={date => console.log("on select" + date)} />
                 </div>
                 <div className="right-checks">
                   <input type="checkbox" id="mounting-check" className="check" name="mounting" value="mounting" onClick={this.handleInputChange} />
@@ -328,9 +426,34 @@ class Estimate extends Component {
               <div className={movinginfotitleHidden}>
                 <h1>We have a few questions...</h1><MagnifyingGlassIcon />
               </div>
-              <div className={movinginfoHidden}>
+              <div className={otherInfoHidden}>
                 <div className="infoq returningq row">
                   <h2>Have you used our services in the past?</h2>
+                  <div className="radio">
+                    <label>
+                      <input
+                        type="radio"
+                        value={"Yes"}
+                        name="returning"
+                        default-checked={this.state.returning}
+                        onChange={this.handleDetailChange}
+                      />Yes
+                  </label>
+                    <br></br>
+                    <label>
+                      <input
+                        type="radio"
+                        value={"No"}
+                        name="returning"
+                        default-checked={!this.state.returning}
+                        onChange={this.handleDetailChange}
+                      />No
+                  </label>
+                  </div>
+                </div>
+                <div className={movinginfoHidden}>
+                  <div className="infoq returningq row">
+                    {/* <h2>Have you used our services in the past?</h2>
                   <div className="radio">
                     <label>
                       <input
@@ -351,272 +474,446 @@ class Estimate extends Component {
                         onChange={this.handleDetailChange}
                       />No
                   </label>
+                  </div> */}
+                  </div>
+                  <br></br>
+                  <div className="infoq addressq row">
+                    <div className="current-add add">
+                      <h2>Where are we moving you out of?</h2>
+                      <TextArea
+                        id="current"
+                        name="current"
+                        onChange={this.handleInputChange.bind(this)}
+                        placeholder="Enter your CURRENT address"
+                        required
+                        value={this.state.current}
+                        style={{ width: "100%" }}
+                        rows={3}
+                      />
+                    </div>
+                    <div className="destination-add add">
+                      <h2>Where are we moving you to?</h2>
+                      <TextArea
+                        id="destination"
+                        name="destination"
+                        onChange={this.handleInputChange.bind(this)}
+                        placeholder="Enter your NEW address"
+                        value={this.state.destination}
+                        style={{ width: "100%" }}
+                        rows={3}
+                      />
+                    </div>
+                  </div>
+                  <br></br>
+                  <div className="infoq current-typeq row">
+                    <h2>Which of these best describes your CURRENT address?</h2>
+                    <div className="radio">
+                      <label>
+                        <input
+                          type="radio"
+                          name="currentType"
+                          value={"house"}
+                          default-checked={this.state.currentType}
+                          onChange={this.handleDetailChange}
+                        />House
+                  </label>
+                      <br></br>
+                      <label>
+                        <input
+                          type="radio"
+                          value={"apartment"}
+                          name="currentType"
+                          default-checked={!this.state.currentType}
+                          onChange={this.handleDetailChange}
+                        />Apartment
+                  </label>
+                      <br></br>
+                      <label>
+                        <input
+                          type="radio"
+                          value={"office"}
+                          name="currentType"
+                          default-checked={!this.state.currentType}
+                          onChange={this.handleDetailChange}
+                        />Office Building
+                  </label>
+                    </div>
+                  </div>
+                  <br></br>
+                  <div className="infoq infoq-white current-floorq row">
+                    <h2>At your CURRENT address, how many floors <u>total</u> are there BEFORE your front door OR INSIDE?</h2>
+                    <TextArea
+                      id="currentFloor"
+                      name="currentFloor"
+                      onChange={this.handleInputChange.bind(this)}
+                      placeholder="##"
+                      value={this.state.currentFloor}
+                      style={{ width: "100%" }}
+                      rows={1}
+                    />
+                  </div>
+                  <br></br>
+                  <div className="infoq current-elevatorq row">
+                    <h2>Does your CURRENT address have an elevator?</h2>
+                    <div className="radio">
+                      <label>
+                        <input
+                          type="radio"
+                          value={true}
+                          name="currentElevator"
+                          default-checked={this.state.currentElevator}
+                          onChange={this.handleDetailChange}
+                        />Yes
+                  </label>
+                      <br></br>
+                      <label>
+                        <input
+                          type="radio"
+                          value={false}
+                          name="currentElevator"
+                          default-checked={!this.state.currentElevator}
+                          onChange={this.handleDetailChange}
+                        />No
+                  </label>
+                    </div>
+                  </div>
+                  <br></br>
+                  <div className={currentElevatorTimeHidden}>
+                    <h2>Is there a time restriction with the elevator?</h2>
+                    <TextArea
+                      id="currentElevatorTime"
+                      name="currentElevatorTime"
+                      onChange={this.handleInputChange.bind(this)}
+                      placeholder="Elevator time"
+                      value={this.state.currentElevatorTime}
+                      style={{ width: "100%" }}
+                      rows={1}
+                    />
+                  </div>
+                  <br></br>
+                  <div className="infoq current-bedroomsq row">
+                    <h2>How many bedrooms worth of stuff does your CURRENT address have?</h2>
+                    <TextArea
+                      id="currentBedrooms"
+                      name="currentBedrooms"
+                      onChange={this.handleInputChange.bind(this)}
+                      placeholder="##"
+                      value={this.state.currentBedrooms}
+                      style={{ width: "100%" }}
+                      rows={1}
+                    />
+                  </div>
+                  <br></br>
+                  <div className="infoq infoq-white destination-typeq row">
+                    <h2>Which of these best describes your NEW address?</h2>
+                    <div className="radio">
+                      <label>
+                        <input
+                          type="radio"
+                          value={"house"}
+                          name="destinationType"
+                          default-checked={this.state.destinationType}
+                          onChange={this.handleDetailChange}
+                        />House
+                  </label>
+                      <br></br>
+                      <label>
+                        <input
+                          type="radio"
+                          value={"apartment"}
+                          name="destinationType"
+                          default-checked={!this.state.destinationType}
+                          onChange={this.handleDetailChange}
+                        />Apartment
+                  </label>
+                      <br></br>
+                      <label>
+                        <input
+                          type="radio"
+                          value={"office"}
+                          name="desinationType"
+                          default-checked={!this.state.destinationType}
+                          onChange={this.handleDetailChange}
+                        />Office Building
+                  </label>
+                    </div>
+                  </div>
+                  <br></br>
+                  <div className="infoq destination-floorq">
+                    <h2>At your NEW address, how many floors <u>total</u> are there BEFORE your front door OR INSIDE?</h2>
+                    <TextArea
+                      id="destinationFloor"
+                      name="destinationFloor"
+                      onChange={this.handleInputChange.bind(this)}
+                      placeholder="##"
+                      value={this.state.destinationFloor}
+                      style={{ width: "100%" }}
+                      rows={1}
+                    />
+                  </div>
+                  <br></br>
+                  <div className="infoq infoq-white destination-elevatorq row">
+                    <h2>Does your NEW address have an elevator?</h2>
+                    <div className="radio">
+                      <label>
+                        <input
+                          type="radio"
+                          value={true}
+                          name="destinationElevator"
+                          default-checked={this.state.destinationElevator}
+                          onChange={this.handleDetailChange}
+                        />Yes
+                  </label>
+                      <br></br>
+                      <label>
+                        <input
+                          type="radio"
+                          value={false}
+                          name="destinationElevator"
+                          default-checked={!this.state.destinationElevator}
+                          onChange={this.handleDetailChange}
+                        />No
+                  </label>
+                    </div>
+                  </div>
+                  <br></br>
+                  <div className={destinationElevatorTimeHidden}>
+                    <h2>Is there a time restriction with the elevator?</h2>
+                    <TextArea
+                      id="destinationElevatorTime"
+                      name="destinationElevatorTime"
+                      onChange={this.handleInputChange.bind(this)}
+                      placeholder="Elevator time"
+                      value={this.state.destinationElevatorTime}
+                      style={{ width: "100%" }}
+                      rows={1}
+                    />
+                  </div>
+                  <br></br>
+                  <div className={boxesHidden}>
+                    <h2>About how many boxes will we be moving?</h2>
+                    <TextArea
+                      id="boxes"
+                      name="boxes"
+                      onChange={this.handleInputChange.bind(this)}
+                      placeholder="##"
+                      value={this.state.boxes}
+                      style={{ width: "100%" }}
+                      rows={1}
+                    />
+                  </div>
+                  <br></br>
+                  <div className={movingDetailsHidden}>
+                    <h2>Are there any items that need special care?</h2>
+                    <TextArea
+                      id="special"
+                      name="special"
+                      onChange={this.handleInputChange.bind(this)}
+                      placeholder="Special care items"
+                      value={this.state.special}
+                      style={{ width: "100%" }}
+                      rows={3}
+                    />
+                  </div>
+                  <br></br>
+                  <div className={movingDetailsHidden}>
+                    <h2>Is there anything else we should know about the move?</h2>
+                    <TextArea
+                      id="details"
+                      name="details"
+                      onChange={this.handleInputChange.bind(this)}
+                      placeholder="Details"
+                      value={this.state.details}
+                      style={{ width: "100%" }}
+                      rows={3}
+                    />
                   </div>
                 </div>
-                <br></br>
-                <div className="infoq addressq row">
-                  <div className="current-add add">
-                    <h2>Where are we moving you out of?</h2>
+                <div className={packHidden}>
+                  <div className={packAddressHidden}>
+                    <h2>At what address will we be PACKING?</h2>
                     <TextArea
                       id="current"
                       name="current"
                       onChange={this.handleInputChange.bind(this)}
-                      placeholder="Enter your CURRENT address"
+                      placeholder="Enter your address"
                       required
                       value={this.state.current}
                       style={{ width: "100%" }}
                       rows={3}
                     />
                   </div>
-                  <div className="destination-add add">
-                    <h2>Where are we moving you to?</h2>
+                  <br></br>
+                  <div className={packBedroomsHidden}>
+                    <h2>How many bedrooms will we be PACKING</h2>
                     <TextArea
-                      id="destination"
-                      name="destination"
+                      id="packBedrooms"
+                      name="packBedrooms"
                       onChange={this.handleInputChange.bind(this)}
-                      placeholder="Enter your NEW address"
-                      value={this.state.destination}
+                      placeholder="##"
+                      value={this.state.packBedrooms}
+                      style={{ width: "100%" }}
+                      rows={1}
+                    />
+                  </div>
+                  <div className="infoq infoq-white pack-specialq">
+                    <h2>Are there any items that need special care?</h2>
+                    <TextArea
+                      id="special"
+                      name="special"
+                      onChange={this.handleInputChange.bind(this)}
+                      placeholder="Special care items"
+                      value={this.state.special}
+                      style={{ width: "100%" }}
+                      rows={3}
+                    />
+                  </div>
+                  <br></br>
+                  <div className="infoq pack-detailsq">
+                    <h2>Is there anything else we should know?</h2>
+                    <TextArea
+                      id="details"
+                      name="details"
+                      onChange={this.handleInputChange.bind(this)}
+                      placeholder="Details"
+                      value={this.state.details}
                       style={{ width: "100%" }}
                       rows={3}
                     />
                   </div>
                 </div>
-                <br></br>
-                <div className="infoq current-typeq row">
-                  <h2>Which of these best describes your CURRENT address?</h2>
-                  <div className="radio">
-                    <label>
-                      <input
-                        type="radio"
-                        name="currentType"
-                        value={"house"}
-                        default-checked={this.state.currentType}
-                        onChange={this.handleDetailChange}
-                      />House
-                  </label>
-                    <br></br>
-                    <label>
-                      <input
-                        type="radio"
-                        value={"apartment"}
-                        name="currentType"
-                        default-checked={!this.state.currentType}
-                        onChange={this.handleDetailChange}
-                      />Apartment
-                  </label>
-                    <br></br>
-                    <label>
-                      <input
-                        type="radio"
-                        value={"office"}
-                        name="currentType"
-                        default-checked={!this.state.currentType}
-                        onChange={this.handleDetailChange}
-                      />Office Building
-                  </label>
-                  </div>
+              </div>
+              <div className={crateHidden}>
+                <div className={crateAddressHidden}>
+                  <h2>At what address will we be CRATING?</h2>
+                  <TextArea
+                    id="current"
+                    name="current"
+                    onChange={this.handleInputChange.bind(this)}
+                    placeholder="Enter your address"
+                    required
+                    value={this.state.current}
+                    style={{ width: "100%" }}
+                    rows={3}
+                  />
                 </div>
                 <br></br>
-                <div className="infoq infoq-white current-floorq">
-                  <h2>How many flights of stairs will we be climbing at your CURRENT address?</h2>
+                <div className="infoq infoq-white crate-detailsq">
+                  <h2>Which items will we be CRATING?</h2>
                   <TextArea
-                    id="currentFloor"
-                    name="currentFloor"
+                    id="crateDetails"
+                    name="crateDetails"
+                    onChange={this.handleInputChange.bind(this)}
+                    placeholder="Details"
+                    value={this.state.crateDetails}
+                    style={{ width: "100%" }}
+                    rows={3}
+                  />
+                </div>
+              </div>
+              <div className={unpackHidden}>
+                <div className={unpackAddressHidden}>
+                  <h2>At what address will we be UNPACKING?</h2>
+                  <TextArea
+                    id="destination"
+                    name="destination"
+                    onChange={this.handleInputChange.bind(this)}
+                    placeholder="Enter your new address"
+                    required
+                    value={this.state.destination}
+                    style={{ width: "100%" }}
+                    rows={3}
+                  />
+                </div>
+                <br></br>
+                <div className={unpackBedroomsHidden}>
+                  <h2>How many bedrooms will we be UNPACKING</h2>
+                  <TextArea
+                    id="unpackBedrooms"
+                    name="unpackBedrooms"
                     onChange={this.handleInputChange.bind(this)}
                     placeholder="##"
-                    value={this.state.currentFloor}
+                    value={this.state.unpackBedrooms}
                     style={{ width: "100%" }}
                     rows={1}
                   />
                 </div>
-                <br></br>
-                <div className="infoq current-elevatorq row">
-                  <h2>Does your CURRENT address have an elevator?</h2>
-                  <div className="radio">
-                    <label>
-                      <input
-                        type="radio"
-                        value={true}
-                        name="currentElevator"
-                        default-checked={this.state.currentElevator}
-                        onChange={this.handleDetailChange}
-                      />Yes
-                  </label>
-                    <br></br>
-                    <label>
-                      <input
-                        type="radio"
-                        value={false}
-                        name="currentElevator"
-                        default-checked={!this.state.currentElevator}
-                        onChange={this.handleDetailChange}
-                      />No
-                  </label>
-                  </div>
-                </div>
-                <br></br>
-                <div className={'infoq infoq-white current-elevator-timeq row'}>
-                  <h2>(Optional) Is there a time restriction with the elevator?</h2>
+                <div className={unpackSpecialHidden}>
+                  <h2>Are there any items that need special care?</h2>
                   <TextArea
-                    id="currentElevatorTime"
-                    name="currentElevatorTime"
+                    id="special"
+                    name="special"
                     onChange={this.handleInputChange.bind(this)}
-                    placeholder="Elevator time"
-                    value={this.state.currentElevatorTime}
+                    placeholder="Special care items"
+                    value={this.state.special}
                     style={{ width: "100%" }}
-                    rows={1}
+                    rows={3}
                   />
                 </div>
                 <br></br>
-                <div className="infoq current-bedroomsq row">
-                  <h2>How many bedrooms does your CURRENT address have?</h2>
+                <div className={unpackSpecialHidden}>
+                  <h2>Is there anything else we should know?</h2>
                   <TextArea
-                    id="currentBedrooms"
-                    name="currentBedrooms"
+                    id="details"
+                    name="details"
+                    onChange={this.handleInputChange.bind(this)}
+                    placeholder="Details"
+                    value={this.state.details}
+                    style={{ width: "100%" }}
+                    rows={3}
+                  />
+                </div>
+                <div className={unpackBoxesHidden}>
+                  <h2>About how many boxes will we be UNPACKING?</h2>
+                  <TextArea
+                    id="unpackBoxes"
+                    name="unpackBoxes"
                     onChange={this.handleInputChange.bind(this)}
                     placeholder="##"
-                    value={this.state.currentBedrooms}
-                    style={{ width: "100%" }}
-                    rows={1}
-                  />
-                </div>
-                <br></br>
-                <div className="infoq infoq-white destination-typeq row">
-                  <h2>Which of these best describes your NEW address?</h2>
-                  <div className="radio">
-                    <label>
-                      <input
-                        type="radio"
-                        value={"house"}
-                        name="destinationType"
-                        default-checked={this.state.destinationType}
-                        onChange={this.handleDetailChange}
-                      />House
-                  </label>
-                    <br></br>
-                    <label>
-                      <input
-                        type="radio"
-                        value={"apartment"}
-                        name="destinationType"
-                        default-checked={!this.state.destinationType}
-                        onChange={this.handleDetailChange}
-                      />Apartment
-                  </label>
-                    <br></br>
-                    <label>
-                      <input
-                        type="radio"
-                        value={"office"}
-                        name="desinationType"
-                        default-checked={!this.state.destinationType}
-                        onChange={this.handleDetailChange}
-                      />Office Building
-                  </label>
-                  </div>
-                </div>
-                <br></br>
-                <div className="infoq destination-floorq">
-                  <h2>How many flights of stairs will we be climbing at your NEW address?</h2>
-                  <TextArea
-                    id="destinationFloor"
-                    name="destinationFloor"
-                    onChange={this.handleInputChange.bind(this)}
-                    placeholder="##"
-                    value={this.state.destinationFloor}
-                    style={{ width: "100%" }}
-                    rows={1}
-                  />
-                </div>
-                <br></br>
-                <div className="infoq infoq-white destination-elevatorq row">
-                  <h2>Does your NEW address have an elevator?</h2>
-                  <div className="radio">
-                    <label>
-                      <input
-                        type="radio"
-                        value={true}
-                        name="destinationElevator"
-                        default-checked={this.state.destinationElevator}
-                        onChange={this.handleDetailChange}
-                      />Yes
-                  </label>
-                    <br></br>
-                    <label>
-                      <input
-                        type="radio"
-                        value={false}
-                        name="destinationElevator"
-                        default-checked={!this.state.destinationElevator}
-                        onChange={this.handleDetailChange}
-                      />No
-                  </label>
-                  </div>
-                </div>
-                <br></br>
-                <div className={'infoq destination-elevator-timeq row'}>
-                  <h2>(Optional) Is there a time restriction with the elevator?</h2>
-                  <TextArea
-                    id="destinationElevatorTime"
-                    name="destinationElevatorTime"
-                    onChange={this.handleInputChange.bind(this)}
-                    placeholder="Elevator time"
-                    value={this.state.destinationElevatorTime}
-                    style={{ width: "100%" }}
-                    rows={1}
-                  />
-                </div>
-                <br></br>
-                <div className="infoq boxesq">
-                  <h2>About how many boxes will we be moving?</h2>
-                  <TextArea
-                    id="boxes"
-                    name="boxes"
-                    onChange={this.handleInputChange.bind(this)}
-                    placeholder="##"
-                    value={this.state.boxes}
+                    value={this.state.unpackBoxes}
                     style={{ width: "100%" }}
                     rows={1}
                   />
                 </div>
               </div>
-              <br></br>
-              <div className="infoq infoq-white specialq">
-                <h2>Are there any items that need special care?</h2>
+              <div className={mountAddressHidden}>
+                <h2>At what address will we be MOUNTING?</h2>
                 <TextArea
-                  id="special"
-                  name="special"
+                  id="destination"
+                  name="destination"
                   onChange={this.handleInputChange.bind(this)}
-                  placeholder="Special care items"
-                  value={this.state.special}
+                  placeholder="Enter your new address"
+                  required
+                  value={this.state.destination}
                   style={{ width: "100%" }}
                   rows={3}
                 />
               </div>
               <br></br>
-              <div className="infoq detailsq">
-                <h2>Is there anything else we should know about the move?</h2>
-                <TextArea
-                  id="details"
-                  name="details"
-                  onChange={this.handleInputChange.bind(this)}
-                  placeholder="Details"
-                  value={this.state.details}
-                  style={{ width: "100%" }}
-                  rows={3}
-                />
+              <div className={mountDetailsHidden}>
+                <div className="infoq infoq-white mount-detailsq">
+                  <h2>Which items will we be MOUNTING?</h2>
+                  <TextArea
+                    id="mountDetails"
+                    name="mountDetails"
+                    onChange={this.handleInputChange.bind(this)}
+                    placeholder="Details"
+                    value={this.state.mountDetails}
+                    style={{ width: "100%" }}
+                    rows={3}
+                  />
+                </div>
               </div>
             </div>
             <div className="btn-row row">
               <div className="button-div">
-                <a className="submit-button" href="." onClick={this.handleFormSubmit}>
+                <a className="submit-button" href="#" onClick={this.handleFormSubmit}>
                   <h4 className="button-text">Get Your Estimate</h4>
                 </a>
               </div>
             </div>
           </form>
         </div>
-
       </Container >
     );
   }

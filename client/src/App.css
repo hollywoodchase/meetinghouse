@@ -96,7 +96,7 @@ li {
 }
 #footer-text {
   margin-top: 10px;
-  font-size: 20px;
+  font-size: 1em;
   font-family: 'Josefin Sans', sans-serif;
   /* border: 2px solid white; */
   display: flex;
@@ -431,6 +431,7 @@ col {
 .moving-text {
   font-family: 'Josefin Sans', sans-serif;
   font-size: 40px;
+  text-align: center;
 }
 .fountain-image {
   position: absolute;
@@ -521,6 +522,9 @@ col {
  
 }
 .date-picker {
+  text-align: center;
+}
+.date-picker2 {
   text-align: center;
 }
 .not-moving {
@@ -627,7 +631,7 @@ col {
   display: flex;
   flex-direction: column;
   text-align: center;
-  /* justify-content: space-around; */
+  /* justify-content: center; */
   border: 2px solid black;
   background: #a7a7a7;
   width: 100vw;
@@ -635,10 +639,21 @@ col {
 }
 .extra-info li {
   font-size: 25px;
+  /* border: 2px solid yellow; */
 }
 .extra-info Link {
   color: black;
   font-size: 30px;
+}
+.extra-info ul {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+  /* flex-direction: column;
+  align-items: center; */
+  /* text-align: center; */
+  /* border: 2px solid white; */
+  /* justify-content: center; */
 }
 .movinginfo-row {
   /* border: 2px solid black; */
@@ -659,6 +674,7 @@ col {
 }
 .movinginfo-title {
   width: 100vw;
+  text-align: center;
   display: flex;
   justify-content: center;
   margin: 20px 20px 20px 0;
@@ -671,14 +687,43 @@ col {
   /* border: 2px solid yellow; */
   width: 100vw;
   display: flex;
+  flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  margin: 10px 0 10px 0;
-}
-.add {
-  width: 40%;
-  /* border: 2px solid green; */
   text-align: center;
+  margin: 10px 0 10px 0;
+
+}
+/* .add {
+  width: 40%;
+  text-align: center;
+} */
+.packorunpack-add {
+  width: 100vw;
+}
+.packorunpack-addressq {
+  display: flex;
+  justify-content: center;
+  width: 100vw;
+}
+.mount-addressq {
+  display: flex;
+  justify-content: center;
+  /* border: 2px solid white; */
+  text-align: center;
+  width: 100vw;
+}
+.packorunpack-bedroomsq {
+  /* border: 2px solid green; */
+  display: flex;
+  justify-content: center;
+  width: 100vw;
+}
+.unpack-bedroomsq {
+  /* border: 2px solid white; */
+  /* display: flex;
+  justify-content: center;
+  width: 100vw; */
 }
 .infoq-white {
   color: white;
@@ -687,4 +732,32 @@ col {
 .infoq-white .radio {
   color: black;
   text-shadow: none;
+}
+.otherinfo-row {
+  display: flex;
+  justify-content: center;
+}
+.pack-row {
+  display: flex;
+  justify-content: center;
+}
+.unpack-row {
+  display: flex;
+  justify-content: center;
+}
+.detailsq {
+  display: flex;
+  flex-direction: column;
+}
+.crate-row {
+  display: flex;
+  justify-content: center;
+}
+.unpack-boxesq {
+  display: flex;
+  /* border: 2px solid white; */
+  text-align: center;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
