@@ -8,6 +8,7 @@ import UnpackingIcon from "./icons/unpackingIcon";
 import CratingIcon from "./icons/cratingIcon";
 import MountingIcon from "./icons/mountingIcon";
 import ArchImage from "./archImage.js";
+import SmallLogoImage from "./smallLogoImage.js";
 import { withRouter } from 'react-router';
 import { HashLink as Link } from 'react-router-hash-link';
 
@@ -17,7 +18,8 @@ class App extends Component {
       <div className='App'>
         <Container fluid className='home-container'>
           <div className="scroll-rows row">
-            <ArchImage />
+            <SmallLogoImage />
+            {/* <ArchImage /> */}
             <div className="button-row row">
               <h1 className="title-text">Meetinghouse Movers</h1>
               <div className="button-div">
