@@ -3,6 +3,7 @@ import { Container } from "../components/grid";
 import { TextArea } from "../components/form";
 import { withRouter } from 'react-router';
 import FountainImage from "./fountainImage.js";
+import SmallLogoImage from "./smallLogoImage.js";
 import DatePicker from "react-datepicker";
 import { HashLink as Link } from 'react-router-hash-link';
 import emailjs from 'emailjs-com';
@@ -191,7 +192,7 @@ class Estimate extends Component {
       });
     } else if (name === "currentFloor") {
       this.setState({
-        currentType: value
+        currentFloor: value
       });
     } else if (name === "currentElevator") {
       this.setState({
@@ -315,16 +316,18 @@ class Estimate extends Component {
     const packHidden = this.state.isPacking ? 'pack-row row' : 'hidden';
     const unpackHidden = this.state.isUnpacking ? 'unpack-row row' : 'hidden';
     const mountHidden = this.state.isMounting ? 'mount-row row' : 'hidden';
-    const mountDetailsHidden = this.state.isMounting ? 'infoq infoq-white mount-detailsq row' : 'hidden';
+    const mountDetailsHidden = this.state.isMounting ? 'infoq mount-detailsq row' : 'hidden';
     const mountAddressHidden = this.state.isMounting && (!this.state.isMoving && !this.state.isUnpacking) ? ' infoq mount-addressq row' : 'hidden';
     const crateHidden = this.state.isCrating ? 'crate-row row' : 'hidden';
     const crateAddressHidden = this.state.isCrating && !this.state.isMoving && !this.state.isPacking ? 'infoq crate-addressq' : 'hidden';
     const destinationElevatorTimeHidden = this.state.destinationElevator === "true" ? 'infoq destination-elevator-timeq row' : 'hidden';
-    const currentElevatorTimeHidden = this.state.currentElevator === "true" ? 'infoq infoq-white current-elevator-timeq row' : 'hidden';
+    const destinationFloorHidden = this.state.destinationElevator === "false" ? "infoq destination-floorq row" : 'hidden';
+    const currentElevatorTimeHidden = this.state.currentElevator === "true" ? 'infoq current-elevator-timeq row' : 'hidden';
+    const currentFloorHidden = this.state.currentElevator === "false" ? "infoq current-floorq row" : 'hidden';
     const movingDetailsHidden = this.state.isMoving && (this.state.isPacking || this.state.isUnpacking || this.state.isMounting || this.state.isCrating) ? 'hidden' : 'infoq detailsq';
-    const boxesHidden = this.state.isPacking ? 'hidden' : 'infoq infoq-white boxesq';
-    const unpackSpecialHidden = this.state.isUnpacking && (this.state.isPacking || this.state.isCrating || this.state.isMounting) ? 'hidden' : "infoq infoq-white unpack-specialq";
-    const packAddressHidden = this.state.isMoving && this.state.isPacking ? 'hidden' : "infoq infoq-white pack-addressq row";
+    const boxesHidden = this.state.isPacking ? 'hidden' : 'infoq boxesq';
+    const unpackSpecialHidden = this.state.isUnpacking && (this.state.isPacking || this.state.isCrating || this.state.isMounting) ? 'hidden' : "infoq unpack-specialq";
+    const packAddressHidden = this.state.isMoving && this.state.isPacking ? 'hidden' : "infoq pack-addressq row";
     const packBedroomsHidden = this.state.isMoving && this.state.isPacking ? 'hidden' : "infoq pack-bedroomsq row";
     const unpackBedroomsHidden = this.state.isMoving && this.state.isUnpacking ? 'hidden' : "infoq unpack-bedroomsq row";
     const unpackAddressHidden = this.state.isMoving && this.state.isUnpacking ? 'hidden' : "infoq unpack-addressq row";
@@ -332,13 +335,13 @@ class Estimate extends Component {
     const unpackBoxesHidden = this.state.isUnpacking && (!this.state.isMoving && !this.state.isPacking) ? 'unpack-boxesq' : 'hidden';
     const mmcDetailsHidden = this.state.isMoving && this.state.isMounting && this.state.isCrating ? 'infoq detailsq' : 'hidden';
     const mumDetailsHidden = this.state.isMoving && this.state.isUnpacking && this.state.isMounting && !this.state.isCrating ? 'infoq detailsq' : 'hidden';
-    const packMoveHidden = this.state.isMoving && this.state.isPacking ? 'hidden' : "infoq pack-detailsq"; 
+    const packMoveHidden = this.state.isMoving && this.state.isPacking ? 'hidden' : "infoq pack-detailsq";
 
     return (
 
       <Container fluid className='estimates-container'>
         <div className="form-rows row">
-          <FountainImage />
+          <SmallLogoImage />
           <div className="question-row row">
             <h1>Which service or services are you interested in?</h1>
           </div>
@@ -516,20 +519,17 @@ class Estimate extends Component {
                           onChange={this.handleDetailChange}
                         />Office Building
                   </label>
-                    </div>
-                  </div>
                   <br></br>
-                  <div className="infoq infoq-white current-floorq row">
-                    <h2>At your CURRENT address, how many floors <u>total</u> are there BEFORE your front door OR INSIDE?</h2>
-                    <TextArea
-                      id="currentFloor"
-                      name="currentFloor"
-                      onChange={this.handleInputChange.bind(this)}
-                      placeholder="##"
-                      value={this.state.currentFloor}
-                      style={{ width: "100%" }}
-                      rows={1}
-                    />
+                      <label>
+                        <input
+                          type="radio"
+                          value={"storage"}
+                          name="currentType"
+                          default-checked={!this.state.currentType}
+                          onChange={this.handleDetailChange}
+                        />Storage Facility/Garage
+                  </label>
+                    </div>
                   </div>
                   <br></br>
                   <div className="infoq current-elevatorq row">
@@ -553,6 +553,61 @@ class Estimate extends Component {
                           default-checked={!this.state.currentElevator}
                           onChange={this.handleDetailChange}
                         />No
+                  </label>
+                    </div>
+                  </div>
+                  <br></br>
+                  <div className={currentFloorHidden}>
+                    <h2>At your CURRENT address, how many steps are there to the top floor?</h2>
+                    <div className="radio">
+                      <label>
+                        <input
+                          type="radio"
+                          value={"0-10"}
+                          name="currentFloor"
+                          default-checked={this.state.currentFloor}
+                          onChange={this.handleDetailChange}
+                        />0-10
+                  </label>
+                      <br></br>
+                      <label>
+                        <input
+                          type="radio"
+                          value={"10-20"}
+                          name="currentFloor"
+                          default-checked={this.state.currentFloor}
+                          onChange={this.handleDetailChange}
+                        />10-20
+                  </label>
+                      <br></br>
+                      <label>
+                        <input
+                          type="radio"
+                          value={"20-30"}
+                          name="currentFloor"
+                          default-checked={this.state.currentFloor}
+                          onChange={this.handleDetailChange}
+                        />20-30
+                  </label>
+                      <br></br>
+                      <label>
+                        <input
+                          type="radio"
+                          value={"30-40"}
+                          name="currentFloor"
+                          default-checked={this.state.currentFloor}
+                          onChange={this.handleDetailChange}
+                        />30-40
+                  </label>
+                      <br></br>
+                      <label>
+                        <input
+                          type="radio"
+                          value={"40-50"}
+                          name="currentFloor"
+                          default-checked={this.state.currentFloor}
+                          onChange={this.handleDetailChange}
+                        />40-50
                   </label>
                     </div>
                   </div>
@@ -583,7 +638,7 @@ class Estimate extends Component {
                     />
                   </div>
                   <br></br>
-                  <div className="infoq infoq-white destination-typeq row">
+                  <div className="infoq infoq destination-typeq row">
                     <h2>Which of these best describes your NEW address?</h2>
                     <div className="radio">
                       <label>
@@ -615,23 +670,20 @@ class Estimate extends Component {
                           onChange={this.handleDetailChange}
                         />Office Building
                   </label>
+                  <br></br>
+                      <label>
+                        <input
+                          type="radio"
+                          value={"storage"}
+                          name="desinationType"
+                          default-checked={!this.state.destinationType}
+                          onChange={this.handleDetailChange}
+                        />Storage Facility/Garage
+                  </label>
                     </div>
                   </div>
                   <br></br>
-                  <div className="infoq destination-floorq">
-                    <h2>At your NEW address, how many floors <u>total</u> are there BEFORE your front door OR INSIDE?</h2>
-                    <TextArea
-                      id="destinationFloor"
-                      name="destinationFloor"
-                      onChange={this.handleInputChange.bind(this)}
-                      placeholder="##"
-                      value={this.state.destinationFloor}
-                      style={{ width: "100%" }}
-                      rows={1}
-                    />
-                  </div>
-                  <br></br>
-                  <div className="infoq infoq-white destination-elevatorq row">
+                  <div className="infoq infoq destination-elevatorq row">
                     <h2>Does your NEW address have an elevator?</h2>
                     <div className="radio">
                       <label>
@@ -652,6 +704,61 @@ class Estimate extends Component {
                           default-checked={!this.state.destinationElevator}
                           onChange={this.handleDetailChange}
                         />No
+                  </label>
+                    </div>
+                  </div>
+                  <br></br>
+                  <div className={destinationFloorHidden}>
+                    <h2>At your NEW address, how many steps are there to the top floor?</h2>
+                    <div className="radio">
+                      <label>
+                        <input
+                          type="radio"
+                          value={"0-10"}
+                          name="destinationFloor"
+                          default-checked={this.state.destinationFloor}
+                          onChange={this.handleDetailChange}
+                        />0-10
+                  </label>
+                      <br></br>
+                      <label>
+                        <input
+                          type="radio"
+                          value={"10-20"}
+                          name="destinationFloor"
+                          default-checked={this.state.destinationFloor}
+                          onChange={this.handleDetailChange}
+                        />10-20
+                  </label>
+                      <br></br>
+                      <label>
+                        <input
+                          type="radio"
+                          value={"20-30"}
+                          name="destinationFloor"
+                          default-checked={this.state.destinationFloor}
+                          onChange={this.handleDetailChange}
+                        />20-30
+                  </label>
+                      <br></br>
+                      <label>
+                        <input
+                          type="radio"
+                          value={"30-40"}
+                          name="destinationFloor"
+                          default-checked={this.state.destinationFloor}
+                          onChange={this.handleDetailChange}
+                        />30-40
+                  </label>
+                      <br></br>
+                      <label>
+                        <input
+                          type="radio"
+                          value={"40-50"}
+                          name="destinationFloor"
+                          default-checked={this.state.destinationFloor}
+                          onChange={this.handleDetailChange}
+                        />40-50
                   </label>
                     </div>
                   </div>
@@ -735,7 +842,7 @@ class Estimate extends Component {
                       rows={1}
                     />
                   </div>
-                  <div className="infoq infoq-white pack-specialq">
+                  <div className="infoq infoq pack-specialq">
                     <h2>Are there any items that need special care?</h2>
                     <TextArea
                       id="special"
@@ -777,7 +884,7 @@ class Estimate extends Component {
                   />
                 </div>
                 <br></br>
-                <div className="infoq infoq-white crate-detailsq">
+                <div className="infoq infoq crate-detailsq">
                   <h2>Which items will we be CRATING?</h2>
                   <TextArea
                     id="crateDetails"
