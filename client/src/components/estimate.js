@@ -34,7 +34,14 @@ class Estimate extends Component {
       currentElevator: "",
       currentElevatorQ: "",
       currentElevatorTime: "",
+      currentOffices: "",
       currentBedrooms: "",
+      bedroom1: "",
+      bedroom2: "",
+      kitchen: "",
+      basement: "",
+      bedroom3: "",
+      bedroom4: "",
       destination: "",
       destinationType: "",
       destinationFloor: "",
@@ -275,7 +282,14 @@ class Estimate extends Component {
       currentElevator: this.state.currentElevator,
       currentElevatorQ: this.state.currentElevatorQ,
       currentElevatorTime: this.state.currentElevatorTime,
+      currentOffices: this.state.currentOffices,
       currentBedrooms: this.state.currentBedrooms,
+      bedroom1: this.state.bedroom1,
+      bedroom2: this.state.bedroom2,
+      kitchen: this.state.kitchen,
+      basement: this.state.basement,
+      bedroom3: this.state.bedroom3,
+      bedroom4: this.state.bedroom4,
       destination: this.state.destination,
       destinationType: this.state.destinationType,
       destinationFloor: this.state.destinationFloor,
@@ -336,6 +350,15 @@ class Estimate extends Component {
     const mmcDetailsHidden = this.state.isMoving && this.state.isMounting && this.state.isCrating ? 'infoq detailsq' : 'hidden';
     const mumDetailsHidden = this.state.isMoving && this.state.isUnpacking && this.state.isMounting && !this.state.isCrating ? 'infoq detailsq' : 'hidden';
     const packMoveHidden = this.state.isMoving && this.state.isPacking ? 'hidden' : "infoq pack-detailsq";
+    const leftChecksHidden = this.state.isMoving ? "left-checks" : 'hidden';
+    const officesHidden = this.state.currentType === "office" ? "infoq current-officesq row" : "hidden";
+    const currentBedroomsHidden = this.state.currentType === "house" || this.state.currentType === "apartment" ? "infoq current-bedroomsq row" : "hidden";
+    const inventory1BHidden = this.state.currentBedrooms === "1" ? "infoq inventory1bq row" : "hidden";
+    const inventory2BHidden = this.state.currentBedrooms === "2" ? "infoq inventory2bq row" : "hidden";
+    const inventory3BHidden = this.state.currentBedrooms === "3" ? "infoq inventory3bq row" : "hidden";
+    const inventory4BHidden = this.state.currentBedrooms === "4+" ? "infoq inventory4bq row" : "hidden";
+    const currentElevatorHidden = this.state.currentType === "apartment" || this.state.destinationType === "office" || this.state.destinationType === "storage" ? "infoq current-elevatorq row" : "hidden";
+    const destinationElevatorHidden = this.state.destinationType === "apartment" || this.state.destinationType === "office" || this.state.destinationType === "storage" ? "infoq destination-elevatorq row" : "hidden";
 
     return (
 
@@ -362,7 +385,7 @@ class Estimate extends Component {
             </div>
             <div className="checkboxes-row row">
               <div className="boxes">
-                <div className="left-checks">
+                <div className={leftChecksHidden}>
                   <input type="checkbox" id="packing-check" className="check" name="packing" value="packing" onClick={this.handleInputChange} />
                   <label htmlFor="packing-check" className="packing-text">Packing</label>
 
@@ -469,7 +492,7 @@ class Estimate extends Component {
                         placeholder="Enter your CURRENT address"
                         required
                         value={this.state.current}
-                        style={{ width: "100%" }}
+                        style={{ width: "30vw" }}
                         rows={3}
                       />
                     </div>
@@ -481,7 +504,7 @@ class Estimate extends Component {
                         onChange={this.handleInputChange.bind(this)}
                         placeholder="Enter your NEW address"
                         value={this.state.destination}
-                        style={{ width: "100%" }}
+                        style={{ width: "30vw" }}
                         rows={3}
                       />
                     </div>
@@ -519,7 +542,7 @@ class Estimate extends Component {
                           onChange={this.handleDetailChange}
                         />Office Building
                   </label>
-                  <br></br>
+                      <br></br>
                       <label>
                         <input
                           type="radio"
@@ -530,9 +553,22 @@ class Estimate extends Component {
                         />Storage Facility/Garage
                   </label>
                     </div>
+                  
                   </div>
-                  <br></br>
-                  <div className="infoq current-elevatorq row">
+                  <div className={officesHidden}>
+                    <h2>How many offices are we moving?</h2>
+                    <TextArea
+                      id="currentOffices"
+                      name="currentOffices"
+                      onChange={this.handleInputChange.bind(this)}
+                      placeholder="## of Offices"
+                      value={this.state.currentOffices}
+                      style={{ width: "100%" }}
+                      rows={1}
+                    />
+                  </div>
+                
+                  <div className={currentElevatorHidden}>
                     <h2>Does your CURRENT address have an elevator?</h2>
                     <div className="radio">
                       <label>
@@ -625,20 +661,238 @@ class Estimate extends Component {
                     />
                   </div>
                   <br></br>
-                  <div className="infoq current-bedroomsq row">
+                  <div className={currentBedroomsHidden}>
                     <h2>How many bedrooms worth of stuff does your CURRENT address have?</h2>
-                    <TextArea
-                      id="currentBedrooms"
-                      name="currentBedrooms"
-                      onChange={this.handleInputChange.bind(this)}
-                      placeholder="##"
-                      value={this.state.currentBedrooms}
-                      style={{ width: "100%" }}
-                      rows={1}
-                    />
+                    <div className="radio">
+                      <label>
+                        <input
+                          type="radio"
+                          value={"1"}
+                          name="currentBedrooms"
+                          default-checked={this.state.currentBedrooms}
+                          onChange={this.handleDetailChange}
+                        />1
+                  </label>
+                      <br></br>
+                      <label>
+                        <input
+                          type="radio"
+                          value={"2"}
+                          name="currentBedrooms"
+                          default-checked={!this.state.currentBedrooms}
+                          onChange={this.handleDetailChange}
+                        />2
+                  </label>
+                      <br></br>
+                      <label>
+                        <input
+                          type="radio"
+                          value={"3"}
+                          name="currentBedrooms"
+                          default-checked={!this.state.currentBedrooms}
+                          onChange={this.handleDetailChange}
+                        />3
+                  </label>
+                      <br></br>
+                      <label>
+                        <input
+                          type="radio"
+                          value={"4+"}
+                          name="currentBedrooms"
+                          default-checked={!this.state.currentBedrooms}
+                          onChange={this.handleDetailChange}
+                        />4+
+                  </label>
+                    </div>
                   </div>
                   <br></br>
-                  <div className="infoq infoq destination-typeq row">
+                  <div className={inventory1BHidden}>
+                    <h2>What items are we taking from each room?</h2>
+                    <div className="inventory-choices inventory1B-choices">
+                      <TextArea
+                        id="bedroom1"
+                        name="bedroom1"
+                        onChange={this.handleInputChange.bind(this)}
+                        placeholder="Bedroom #1 Items"
+                        value={this.state.bedroom1}
+                        style={{ width: "60vw" }}
+                        rows={2}
+                      />
+                      <TextArea
+                        id="kitchen"
+                        name="kitchen"
+                        onChange={this.handleInputChange.bind(this)}
+                        placeholder="Kitchen Items"
+                        value={this.state.kitchen}
+                        style={{ width: "60vw" }}
+                        rows={2}
+                      />
+                      <TextArea
+                        id="basement"
+                        name="basement"
+                        onChange={this.handleInputChange.bind(this)}
+                        placeholder="Basement Items"
+                        value={this.state.basement}
+                        style={{ width: "60vw" }}
+                        rows={2}
+                      />
+                    </div>
+                  </div>
+                  <br></br>
+                  <div className={inventory2BHidden}>
+                    <h2>What items are we taking from each room?</h2>
+                    <div className="inventory-choices inventory2B-choices">
+                      <TextArea
+                        id="bedroom1"
+                        name="bedroom1"
+                        onChange={this.handleInputChange.bind(this)}
+                        placeholder="Bedroom #1 Items"
+                        value={this.state.bedroom1}
+                        style={{ width: "60vw" }}
+                        rows={2}
+                      />
+                      <TextArea
+                        id="kitchen"
+                        name="kitchen"
+                        onChange={this.handleInputChange.bind(this)}
+                        placeholder="Kitchen Items"
+                        value={this.state.kitchen}
+                        style={{ width: "60vw" }}
+                        rows={2}
+                      />
+                      <TextArea
+                        id="basement"
+                        name="basement"
+                        onChange={this.handleInputChange.bind(this)}
+                        placeholder="Basement Items"
+                        value={this.state.basement}
+                        style={{ width: "60vw" }}
+                        rows={2}
+                      />
+                      <TextArea
+                        id="bedroom2"
+                        name="bedroom2"
+                        onChange={this.handleInputChange.bind(this)}
+                        placeholder="Bedroom #2 Items"
+                        value={this.state.bedroom2}
+                        style={{ width: "60vw" }}
+                        rows={2}
+                      />
+                    </div>
+                  </div>
+                  <div className={inventory3BHidden}>
+                    <h2>What items are we taking from each room?</h2>
+                    <div className="inventory-choices inventory3B-choices">
+                      <TextArea
+                        id="bedroom1"
+                        name="bedroom1"
+                        onChange={this.handleInputChange.bind(this)}
+                        placeholder="Bedroom #1 Items"
+                        value={this.state.bedroom1}
+                        style={{ width: "60vw" }}
+                        rows={2}
+                      />
+                      <TextArea
+                        id="kitchen"
+                        name="kitchen"
+                        onChange={this.handleInputChange.bind(this)}
+                        placeholder="Kitchen Items"
+                        value={this.state.kitchen}
+                        style={{ width: "60vw" }}
+                        rows={2}
+                      />
+                      <TextArea
+                        id="basement"
+                        name="basement"
+                        onChange={this.handleInputChange.bind(this)}
+                        placeholder="Basement Items"
+                        value={this.state.basement}
+                        style={{ width: "60vw" }}
+                        rows={2}
+                      />
+                      <TextArea
+                        id="bedroom2"
+                        name="bedroom2"
+                        onChange={this.handleInputChange.bind(this)}
+                        placeholder="Bedroom #2 Items"
+                        value={this.state.bedroom2}
+                        style={{ width: "60vw" }}
+                        rows={2}
+                      />
+
+                      <TextArea
+                        id="bedroom3"
+                        name="bedroom3"
+                        onChange={this.handleInputChange.bind(this)}
+                        placeholder="Bedroom #3 Items"
+                        value={this.state.bedrooms3}
+                        style={{ width: "60vw" }}
+                        rows={2}
+                      />
+                    </div>
+                  </div>
+                  <div className={inventory4BHidden}>
+                    <h2>What items are we taking from each room?</h2>
+                    <div className="inventory-choices inventory2B-choices">
+                      <TextArea
+                        id="bedroom1"
+                        name="bedroom1"
+                        onChange={this.handleInputChange.bind(this)}
+                        placeholder="Bedroom #1 Items"
+                        value={this.state.bedroom1}
+                        style={{ width: "60vw" }}
+                        rows={2}
+                      />
+                      <TextArea
+                        id="kitchen"
+                        name="kitchen"
+                        onChange={this.handleInputChange.bind(this)}
+                        placeholder="Kitchen Items"
+                        value={this.state.kitchen}
+                        style={{ width: "60vw" }}
+                        rows={2}
+                      />
+                      <TextArea
+                        id="basement"
+                        name="basement"
+                        onChange={this.handleInputChange.bind(this)}
+                        placeholder="Basement Items"
+                        value={this.state.basement}
+                        style={{ width: "60vw" }}
+                        rows={2}
+                      />
+                      <TextArea
+                        id="bedroom2"
+                        name="bedroom2"
+                        onChange={this.handleInputChange.bind(this)}
+                        placeholder="Bedroom #2 Items"
+                        value={this.state.bedroom2}
+                        style={{ width: "60vw" }}
+                        rows={2}
+                      />
+
+                      <TextArea
+                        id="bedroom3"
+                        name="bedroom3"
+                        onChange={this.handleInputChange.bind(this)}
+                        placeholder="Bedroom #3 Items"
+                        value={this.state.bedrooms3}
+                        style={{ width: "60vw" }}
+                        rows={2}
+                      />
+                      <TextArea
+                        id="bedroom4"
+                        name="bedroom4"
+                        onChange={this.handleInputChange.bind(this)}
+                        placeholder="Bedroom #4 Items"
+                        value={this.state.bedroom4}
+                        style={{ width: "60vw" }}
+                        rows={2}
+                      />
+                    </div>
+                    <br></br>
+                  </div>
+                  <div className="infoq destination-typeq row">
                     <h2>Which of these best describes your NEW address?</h2>
                     <div className="radio">
                       <label>
@@ -670,7 +924,7 @@ class Estimate extends Component {
                           onChange={this.handleDetailChange}
                         />Office Building
                   </label>
-                  <br></br>
+                      <br></br>
                       <label>
                         <input
                           type="radio"
@@ -683,7 +937,7 @@ class Estimate extends Component {
                     </div>
                   </div>
                   <br></br>
-                  <div className="infoq infoq destination-elevatorq row">
+                  <div className={destinationElevatorHidden}>
                     <h2>Does your NEW address have an elevator?</h2>
                     <div className="radio">
                       <label>
@@ -784,7 +1038,7 @@ class Estimate extends Component {
                       onChange={this.handleInputChange.bind(this)}
                       placeholder="##"
                       value={this.state.boxes}
-                      style={{ width: "100%" }}
+                      style={{ width: "35vw" }}
                       rows={1}
                     />
                   </div>
@@ -797,7 +1051,7 @@ class Estimate extends Component {
                       onChange={this.handleInputChange.bind(this)}
                       placeholder="Special care items"
                       value={this.state.special}
-                      style={{ width: "100%" }}
+                      style={{ width: "35vw" }}
                       rows={3}
                     />
                   </div>
@@ -810,7 +1064,7 @@ class Estimate extends Component {
                       onChange={this.handleInputChange.bind(this)}
                       placeholder="Details"
                       value={this.state.details}
-                      style={{ width: "100%" }}
+                      style={{ width: "35vw" }}
                       rows={3}
                     />
                   </div>
@@ -842,7 +1096,7 @@ class Estimate extends Component {
                       rows={1}
                     />
                   </div>
-                  <div className="infoq infoq pack-specialq">
+                  <div className="infoq pack-specialq">
                     <h2>Are there any items that need special care?</h2>
                     <TextArea
                       id="special"
@@ -884,7 +1138,7 @@ class Estimate extends Component {
                   />
                 </div>
                 <br></br>
-                <div className="infoq infoq crate-detailsq">
+                <div className="infoq crate-detailsq">
                   <h2>Which items will we be CRATING?</h2>
                   <TextArea
                     id="crateDetails"
@@ -1027,7 +1281,7 @@ class Estimate extends Component {
               </div>
             </div>
           </form>
-        </div>
+        </div >
       </Container >
     );
   }
