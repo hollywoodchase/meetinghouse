@@ -78,7 +78,7 @@ class Estimate extends Component {
       });
       if (value) {
         this.setState({
-          isMovingQ: "Yes"
+          isMovingQ: "X"
         });
       } else if (!value) {
         this.setState({
@@ -91,7 +91,7 @@ class Estimate extends Component {
       });
       if (value) {
         this.setState({
-          isPackingQ: "Yes"
+          isPackingQ: "X"
         });
       } else if (!value) {
         this.setState({
@@ -104,7 +104,7 @@ class Estimate extends Component {
       });
       if (value) {
         this.setState({
-          isUnpackingQ: "Yes"
+          isUnpackingQ: "X"
         });
       } else if (!value) {
         this.setState({
@@ -117,7 +117,7 @@ class Estimate extends Component {
       });
       if (value) {
         this.setState({
-          isMountingQ: "Yes"
+          isMountingQ: "X"
         });
       } else if (!value) {
         this.setState({
@@ -130,7 +130,7 @@ class Estimate extends Component {
       });
       if (value) {
         this.setState({
-          isCratingQ: "Yes"
+          isCratingQ: "X"
         });
       } else if (!value) {
         this.setState({
@@ -337,8 +337,8 @@ class Estimate extends Component {
     const destinationElevatorTimeHidden = this.state.destinationElevator === "true" ? 'infoq destination-elevator-timeq row' : 'hidden';
     const destinationFloorHidden = this.state.destinationElevator === "false" ? "infoq destination-floorq row" : 'hidden';
     const currentElevatorTimeHidden = this.state.currentElevator === "true" ? 'infoq current-elevator-timeq row' : 'hidden';
-    const currentFloorHidden = this.state.currentElevator === "false" ? "infoq current-floorq row" : 'hidden';
-    const movingDetailsHidden = this.state.isMoving && (this.state.isPacking || this.state.isUnpacking || this.state.isMounting || this.state.isCrating) ? 'hidden' : 'infoq detailsq';
+    const currentFloorHidden = this.state.currentElevator === "false"  || this.state.currentType === "house" ? "infoq current-floorq row" : 'hidden';
+    const movingDetailsHidden = this.state.isMoving ? 'infoq detailsq' : 'hidden';
     const boxesHidden = this.state.isPacking ? 'hidden' : 'infoq boxesq';
     const unpackSpecialHidden = this.state.isUnpacking && (this.state.isPacking || this.state.isCrating || this.state.isMounting) ? 'hidden' : "infoq unpack-specialq";
     const packAddressHidden = this.state.isMoving && this.state.isPacking ? 'hidden' : "infoq pack-addressq row";
@@ -359,6 +359,9 @@ class Estimate extends Component {
     const inventory4BHidden = this.state.currentBedrooms === "4+" ? "infoq inventory4bq row" : "hidden";
     const currentElevatorHidden = this.state.currentType === "apartment" || this.state.destinationType === "office" || this.state.destinationType === "storage" ? "infoq current-elevatorq row" : "hidden";
     const destinationElevatorHidden = this.state.destinationType === "apartment" || this.state.destinationType === "office" || this.state.destinationType === "storage" ? "infoq destination-elevatorq row" : "hidden";
+    const offices1oHidden = this.state.currentOffices === "1" ? "infoq offices1oq row" : "hidden";
+    const offices2oHidden = this.state.currentOffices === "2" ? "infoq offices2oq row" : "hidden";
+    const offices3oHidden = this.state.currentOffices === "3" ? "infoq offices3oq row" : "hidden";
 
     return (
 
@@ -429,7 +432,7 @@ class Estimate extends Component {
                   placeholder="First and Last Name"
                   required
                   value={this.state.name}
-                  style={{ width: "100%" }}
+                  style={{ width: "25vw" }}
                   rows={1}
                 />
                 <TextArea
@@ -439,7 +442,7 @@ class Estimate extends Component {
                   placeholder="Enter email address"
                   required
                   value={this.state.email}
-                  style={{ width: "100%" }}
+                  style={{ width: "25vw" }}
                   rows={1}
                 />
                 <TextArea
@@ -449,7 +452,7 @@ class Estimate extends Component {
                   placeholder="###-###-####"
                   required
                   value={this.state.phone}
-                  style={{ width: "100%" }}
+                  style={{ width: "25vw" }}
                   rows={1}
                 />
               </div>
@@ -553,21 +556,111 @@ class Estimate extends Component {
                         />Storage Facility/Garage
                   </label>
                     </div>
-                  
+
                   </div>
                   <div className={officesHidden}>
                     <h2>How many offices are we moving?</h2>
-                    <TextArea
-                      id="currentOffices"
-                      name="currentOffices"
-                      onChange={this.handleInputChange.bind(this)}
-                      placeholder="## of Offices"
-                      value={this.state.currentOffices}
-                      style={{ width: "100%" }}
-                      rows={1}
-                    />
+                    <div className="radio">
+                      <label>
+                        <input
+                          type="radio"
+                          value={"1"}
+                          name="currentOffices"
+                          default-checked={this.state.currentOffices}
+                          onChange={this.handleDetailChange}
+                        />1
+                  </label>
+                      <br></br>
+                      <label>
+                        <input
+                          type="radio"
+                          value={"2"}
+                          name="currentOffices"
+                          default-checked={this.state.currentOffices}
+                          onChange={this.handleDetailChange}
+                        />2
+                  </label>
+                      <br></br>
+                      <label>
+                        <input
+                          type="radio"
+                          value={"3"}
+                          name="currentOffices"
+                          default-checked={this.state.currentOffices}
+                          onChange={this.handleDetailChange}
+                        />3+
+                  </label>
+                    </div>
                   </div>
-                
+                  <div className={offices1oHidden}>
+                    <h2>What items are we taking from the office?</h2>
+                    <div className="officeinventory-choices">
+                      <TextArea
+                        id="bedroom1"
+                        name="bedroom1"
+                        onChange={this.handleInputChange.bind(this)}
+                        placeholder="Bedroom #1 Items"
+                        value={this.state.bedroom1}
+                        style={{ width: "60vw" }}
+                        rows={2}
+                      />
+                    </div>
+                  </div>
+                  <div className={offices2oHidden}>
+                    <h2>What items are we taking from each office?</h2>
+                    <div className="officeinventory-choices">
+                      <TextArea
+                        id="bedroom1"
+                        name="bedroom1"
+                        onChange={this.handleInputChange.bind(this)}
+                        placeholder="Office #1 Items"
+                        value={this.state.bedroom1}
+                        style={{ width: "60vw" }}
+                        rows={2}
+                      />
+                      <TextArea
+                        id="bedroom2"
+                        name="bedroom2"
+                        onChange={this.handleInputChange.bind(this)}
+                        placeholder="Office #2 Items"
+                        value={this.state.bedroom2}
+                        style={{ width: "60vw" }}
+                        rows={2}
+                      />
+                    </div>
+                  </div>
+                  <div className={offices3oHidden}>
+                    <h2>What items are we taking from each office?</h2>
+                    <div className="officeinventory-choices">
+                      <TextArea
+                        id="bedroom1"
+                        name="bedroom1"
+                        onChange={this.handleInputChange.bind(this)}
+                        placeholder="Office #1 Items"
+                        value={this.state.bedroom1}
+                        style={{ width: "60vw" }}
+                        rows={2}
+                      />
+                      <TextArea
+                        id="bedroom2"
+                        name="bedroom2"
+                        onChange={this.handleInputChange.bind(this)}
+                        placeholder="Office #2 Items"
+                        value={this.state.bedroom2}
+                        style={{ width: "60vw" }}
+                        rows={2}
+                      />
+                      <TextArea
+                        id="bedroom3"
+                        name="bedroom3"
+                        onChange={this.handleInputChange.bind(this)}
+                        placeholder="Office #3 Items"
+                        value={this.state.bedroom3}
+                        style={{ width: "60vw" }}
+                        rows={2}
+                      />
+                    </div>
+                  </div>
                   <div className={currentElevatorHidden}>
                     <h2>Does your CURRENT address have an elevator?</h2>
                     <div className="radio">
@@ -660,7 +753,6 @@ class Estimate extends Component {
                       rows={1}
                     />
                   </div>
-                  <br></br>
                   <div className={currentBedroomsHidden}>
                     <h2>How many bedrooms worth of stuff does your CURRENT address have?</h2>
                     <div className="radio">
@@ -1031,16 +1123,78 @@ class Estimate extends Component {
                   </div>
                   <br></br>
                   <div className={boxesHidden}>
-                    <h2>About how many boxes will we be moving?</h2>
-                    <TextArea
-                      id="boxes"
-                      name="boxes"
-                      onChange={this.handleInputChange.bind(this)}
-                      placeholder="##"
-                      value={this.state.boxes}
-                      style={{ width: "35vw" }}
-                      rows={1}
-                    />
+                  <h2>About how many boxes will we be moving?</h2>
+                    <div className="radio">
+                      <label>
+                        <input
+                          type="radio"
+                          value={"0-10"}
+                          name="boxes"
+                          default-checked={this.state.boxes}
+                          onChange={this.handleDetailChange}
+                        />0-10 - Ex. Furniture Only
+                  </label>
+                      <br></br>
+                      <label>
+                        <input
+                          type="radio"
+                          value={"10-20"}
+                          name="boxes"
+                          default-checked={this.state.boxes}
+                          onChange={this.handleDetailChange}
+                        />10-20 - Ex. Light studio/1 Bedroom Apartment
+                  </label>
+                      <br></br>
+                      <label>
+                        <input
+                          type="radio"
+                          value={"20-30"}
+                          name="boxes"
+                          default-checked={this.state.boxes}
+                          onChange={this.handleDetailChange}
+                        />20-30 - Ex. 1-2 Bedroom Apartment
+                  </label>
+                      <br></br>
+                      <label>
+                        <input
+                          type="radio"
+                          value={"30-40"}
+                          name="boxes"
+                          default-checked={this.state.boxes}
+                          onChange={this.handleDetailChange}
+                        />30-40 - Ex. 2 Bedroom Apartment, 1-2 Story House
+                  </label>
+                      <br></br>
+                      <label>
+                        <input
+                          type="radio"
+                          value={"40-50"}
+                          name="boxes"
+                          default-checked={this.state.boxes}
+                          onChange={this.handleDetailChange}
+                        />40-50 - Ex. 2-3 Bedroom Apartment/House
+                  </label>
+                      <br></br>
+                      <label>
+                        <input
+                          type="radio"
+                          value={"50-75"}
+                          name="boxes"
+                          default-checked={this.state.boxes}
+                          onChange={this.handleDetailChange}
+                        />50-75 - Ex. 3 Bedroom Row Home
+                  </label>
+                      <br></br>
+                      <label>
+                        <input
+                          type="radio"
+                          value={"75-100"}
+                          name="boxes"
+                          default-checked={this.state.boxes}
+                          onChange={this.handleDetailChange}
+                        />75-100 - Ex. 4 Bedroom Row Home/Suburban House
+                  </label>
+                    </div>
                   </div>
                   <br></br>
                   <div className={movingDetailsHidden}>
@@ -1069,7 +1223,7 @@ class Estimate extends Component {
                     />
                   </div>
                 </div>
-                <div className={packHidden}>
+                {/* <div className={packHidden}>
                   <div className={packAddressHidden}>
                     <h2>At what address will we be PACKING?</h2>
                     <TextArea
@@ -1083,8 +1237,8 @@ class Estimate extends Component {
                       rows={3}
                     />
                   </div>
-                  <br></br>
-                  <div className={packBedroomsHidden}>
+                  <br></br> */}
+                  {/* <div className={packBedroomsHidden}>
                     <h2>How many bedrooms will we be PACKING</h2>
                     <TextArea
                       id="packBedrooms"
@@ -1104,12 +1258,12 @@ class Estimate extends Component {
                       onChange={this.handleInputChange.bind(this)}
                       placeholder="Special care items"
                       value={this.state.special}
-                      style={{ width: "100%" }}
+                      style={{ width: "35vw" }}
                       rows={3}
                     />
                   </div>
-                  <br></br>
-                  <div className={packMoveHidden}>
+                  <br></br> */}
+                  {/* <div className={packMoveHidden}>
                     <h2>Is there anything else we should know?</h2>
                     <TextArea
                       id="details"
@@ -1120,8 +1274,8 @@ class Estimate extends Component {
                       style={{ width: "100%" }}
                       rows={3}
                     />
-                  </div>
-                </div>
+                  </div> */}
+                {/* </div> */}
               </div>
               <div className={crateHidden}>
                 <div className={crateAddressHidden}>
@@ -1133,7 +1287,7 @@ class Estimate extends Component {
                     placeholder="Enter your address"
                     required
                     value={this.state.current}
-                    style={{ width: "100%" }}
+                    style={{ width: "35vw" }}
                     rows={3}
                   />
                 </div>
@@ -1146,12 +1300,12 @@ class Estimate extends Component {
                     onChange={this.handleInputChange.bind(this)}
                     placeholder="Details"
                     value={this.state.crateDetails}
-                    style={{ width: "100%" }}
+                    style={{ width: "35vw" }}
                     rows={3}
                   />
                 </div>
               </div>
-              <div className={unpackHidden}>
+              {/* <div className={unpackHidden}>
                 <div className={unpackAddressHidden}>
                   <h2>At what address will we be UNPACKING?</h2>
                   <TextArea
@@ -1164,9 +1318,9 @@ class Estimate extends Component {
                     style={{ width: "100%" }}
                     rows={3}
                   />
-                </div>
-                <br></br>
-                <div className={unpackBedroomsHidden}>
+                </div> */}
+                {/* <br></br> */}
+                {/* <div className={unpackBedroomsHidden}>
                   <h2>How many bedrooms will we be UNPACKING</h2>
                   <TextArea
                     id="unpackBedrooms"
@@ -1176,9 +1330,9 @@ class Estimate extends Component {
                     value={this.state.unpackBedrooms}
                     style={{ width: "100%" }}
                     rows={1}
-                  />
-                </div>
-                <div className={unpackSpecialHidden}>
+                  /> */}
+                {/* </div> */}
+                {/* <div className={unpackSpecialHidden}>
                   <h2>Are there any items that need special care?</h2>
                   <TextArea
                     id="special"
@@ -1186,11 +1340,11 @@ class Estimate extends Component {
                     onChange={this.handleInputChange.bind(this)}
                     placeholder="Special care items"
                     value={this.state.special}
-                    style={{ width: "100%" }}
+                    style={{ width: "35vw" }}
                     rows={3}
                   />
-                </div>
-                <br></br>
+                </div> */}
+                {/* <br></br>
                 <div className={unpackSpecialHidden}>
                   <h2>Is there anything else we should know?</h2>
                   <TextArea
@@ -1199,11 +1353,11 @@ class Estimate extends Component {
                     onChange={this.handleInputChange.bind(this)}
                     placeholder="Details"
                     value={this.state.details}
-                    style={{ width: "100%" }}
+                    style={{ width: "35vw" }}
                     rows={3}
                   />
-                </div>
-                <div className={unpackBoxesHidden}>
+                </div> */}
+                {/* <div className={unpackBoxesHidden}>
                   <h2>About how many boxes will we be UNPACKING?</h2>
                   <TextArea
                     id="unpackBoxes"
@@ -1214,8 +1368,8 @@ class Estimate extends Component {
                     style={{ width: "100%" }}
                     rows={1}
                   />
-                </div>
-              </div>
+                </div> */}
+              {/* </div> */}
               <div className={mountHidden}>
                 <div className={mountAddressHidden}>
                   <h2>At what address will we be MOUNTING?</h2>
@@ -1226,7 +1380,7 @@ class Estimate extends Component {
                     placeholder="Enter your new address"
                     required
                     value={this.state.destination}
-                    style={{ width: "100%" }}
+                    style={{ width: "35vw" }}
                     rows={3}
                   />
                 </div>
@@ -1239,7 +1393,7 @@ class Estimate extends Component {
                     onChange={this.handleInputChange.bind(this)}
                     placeholder="Details"
                     value={this.state.mountDetails}
-                    style={{ width: "100%" }}
+                    style={{ width: "35vw" }}
                     rows={3}
                   />
                 </div>
@@ -1253,7 +1407,7 @@ class Estimate extends Component {
                     onChange={this.handleInputChange.bind(this)}
                     placeholder="Details"
                     value={this.state.details}
-                    style={{ width: "100%" }}
+                    style={{ width: "35vw" }}
                     rows={3}
                   />
                 </div>
@@ -1267,7 +1421,7 @@ class Estimate extends Component {
                     onChange={this.handleInputChange.bind(this)}
                     placeholder="Details"
                     value={this.state.details}
-                    style={{ width: "100%" }}
+                    style={{ width: "35vw" }}
                     rows={3}
                   />
                 </div>
