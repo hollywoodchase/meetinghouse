@@ -39,7 +39,7 @@
 .descriptions-row {
   /* border: 5px solid maroon; */
   height: 65vh;
-  background-image: linear-gradient(#059941 10%, #076c3e 100%);
+  background-image: linear-gradient(white 0%, #059941 50%, #076c3e 100%);
   width: 100vw;
   display: flex;
   align-items: center;
@@ -63,11 +63,12 @@ li {
   display: flex;
   justify-content: center;
   overflow-x: hidden;
+  position: relative;
 }
-.scroll-rows::-webkit-scrollbar {
+/* .scroll-rows::-webkit-scrollbar {
   width: 1em;
-}
- 
+} */
+/*  
 .scroll-rows::-webkit-scrollbar-track {
   box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 }
@@ -75,7 +76,7 @@ li {
 .scroll-rows::-webkit-scrollbar-thumb {
   background-color: darkgrey;
   outline: 1px solid slategrey;
-}
+} */
 .button-row {
   /* background-image: linear-gradient(white 15%, #f45a2d 75%, white); */
   background: white; 
@@ -210,6 +211,7 @@ col {
   width: 50vw;
   height: 55vh;
   opacity: 0.2;
+  /* border: 2px solid purple; */
   /* overflow-y: auto; */
 }
 /* @keyframes swing {
@@ -360,23 +362,27 @@ col {
 }
 .icon {
   background-image: none;
-  width: 75%;
+  width: 80%;
   height: 75%;
 }
 .bigicon {
-  width: 30%;
+  width: 40%;
   height: 80%;
   background: none;
   animation: wobble 4s;
 }
 .bigcard {
-  /* border: 2px solid blue; */
+  border: 5px solid white;
   background-image: linear-gradient(#0A9C91, black);
   width: 100vw;
   height: 60vh;
   display: flex;
   justify-content: space-around;
   align-items: center;
+}
+.bigcard h3 {
+  font-family: cooper-black-std, serif;
+  font-size: 200%;
 }
 .bigscroll-row {
   border: 4px solid black;
@@ -388,31 +394,40 @@ col {
   justify-content: center;
 }
 .bigcard1 {
-  background-image: linear-gradient(#f45a2d, white);
+  background: #f2413b;
 }
 .bigcard2 {
-  background-image: linear-gradient(#f9951b, white);
+  background: #f55a2c;
 }
 .bigcard3 {
-  background-image: linear-gradient(#059941, white);
+  background: #f9951b;
 }
 .bigcard4 {
-  background-image: linear-gradient(#4a7b60, white);
+  background: #059941;
 }
 .bigcard5 {
-  background-image: linear-gradient(#A7A7A7, white);
+  background: #06673a;
 }
 .text-area {
   background-color: white;
-  width: 50%;
+  width: 75%;
   height: 40vh;
   border-radius: 5px;
   border: 4px solid black;
-  /* box-shadow: 5px 10px #888888; */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
+  font-family: arial;
+}
+#text-area1 {
+  height: 56vh;
+}
+#text-area2 {
+  height: 50vh;
+}
+.text-area p {
+  margin: 5px;
 }
 .form-rows {
   /* border: 2px solid green; */
@@ -440,6 +455,9 @@ col {
   flex-direction: column;
   align-items: center;
   /* border: 2px solid black; */
+}
+.moving-icon {
+  /* width: 70%; */
 }
 .form-row2 {
   text-align: center;
@@ -751,6 +769,10 @@ Textarea {
 }
 .otherinfo-row {
   display: flex;
+  width: 100vw;
+  text-align: center;
+  display: flex;
+  /* border: 2px solid pink; */
   justify-content: center;
 }
 .pack-row {
