@@ -1370,155 +1370,155 @@ class Estimate extends Component {
                     />
                   </div>
                 </div>
-              </div>
-              <div className={crateHidden}>
-                <div className={crateAddressHidden}>
-                  <h2>At what address will we be CRATING?</h2>
-                  <TextArea
-                    id="current"
-                    name="current"
-                    onChange={this.handleInputChange.bind(this)}
-                    placeholder="Enter your address"
-                    required
-                    value={this.state.current}
-                    style={{ width: "35vw" }}
-                    rows={3}
-                  />
+                <div className={crateHidden}>
+                  <div className={crateAddressHidden}>
+                    <h2>At what address will we be CRATING?</h2>
+                    <TextArea
+                      id="current"
+                      name="current"
+                      onChange={this.handleInputChange.bind(this)}
+                      placeholder="Enter your address"
+                      required
+                      value={this.state.current}
+                      style={{ width: "35vw" }}
+                      rows={3}
+                    />
+                  </div>
+                  <br></br>
+                  <div className="infoq crate-detailsq">
+                    <h2>Which items will we be CRATING?</h2>
+                    <TextArea
+                      id="crateDetails"
+                      name="crateDetails"
+                      onChange={this.handleInputChange.bind(this)}
+                      placeholder="Details"
+                      value={this.state.crateDetails}
+                      style={{ width: "35vw" }}
+                      rows={3}
+                    />
+                  </div>
                 </div>
-                <br></br>
-                <div className="infoq crate-detailsq">
-                  <h2>Which items will we be CRATING?</h2>
-                  <TextArea
-                    id="crateDetails"
-                    name="crateDetails"
-                    onChange={this.handleInputChange.bind(this)}
-                    placeholder="Details"
-                    value={this.state.crateDetails}
-                    style={{ width: "35vw" }}
-                    rows={3}
-                  />
+                <div className={unpackHidden}>
+                  <div className={unpackAddressHidden}>
+                    <h2>At what address will we be UNPACKING?</h2>
+                    <TextArea
+                      id="destination"
+                      name="destination"
+                      onChange={this.handleInputChange.bind(this)}
+                      placeholder="Enter your new address"
+                      required
+                      value={this.state.destination}
+                      style={{ width: "100%" }}
+                      rows={3}
+                    />
+                  </div>
+                  <br></br>
+                  <div className={unpackBedroomsHidden}>
+                    <h2>How many bedrooms will we be UNPACKING</h2>
+                    <TextArea
+                      id="unpackBedrooms"
+                      name="unpackBedrooms"
+                      onChange={this.handleInputChange.bind(this)}
+                      placeholder="##"
+                      value={this.state.unpackBedrooms}
+                      style={{ width: "100%" }}
+                      rows={1}
+                    />
+                  </div>
+                  <div className={unpackSpecialHidden}>
+                    <h2>Are there any items that need special care?</h2>
+                    <TextArea
+                      id="special"
+                      name="special"
+                      onChange={this.handleInputChange.bind(this)}
+                      placeholder="Special care items"
+                      value={this.state.special}
+                      style={{ width: "35vw" }}
+                      rows={3}
+                    />
+                  </div>
+                  <br></br>
+                  <div className={unpackSpecialHidden}>
+                    <h2>Is there anything else we should know?</h2>
+                    <TextArea
+                      id="details"
+                      name="details"
+                      onChange={this.handleInputChange.bind(this)}
+                      placeholder="Details"
+                      value={this.state.details}
+                      style={{ width: "35vw" }}
+                      rows={3}
+                    />
+                  </div>
+                  <div className={unpackBoxesHidden}>
+                    <h2>About how many boxes will we be UNPACKING?</h2>
+                    <TextArea
+                      id="unpackBoxes"
+                      name="unpackBoxes"
+                      onChange={this.handleInputChange.bind(this)}
+                      placeholder="##"
+                      value={this.state.unpackBoxes}
+                      style={{ width: "100%" }}
+                      rows={1}
+                    />
+                  </div>
                 </div>
-              </div>
-              <div className={unpackHidden}>
-                <div className={unpackAddressHidden}>
-                  <h2>At what address will we be UNPACKING?</h2>
-                  <TextArea
-                    id="destination"
-                    name="destination"
-                    onChange={this.handleInputChange.bind(this)}
-                    placeholder="Enter your new address"
-                    required
-                    value={this.state.destination}
-                    style={{ width: "100%" }}
-                    rows={3}
-                  />
+                <div className={mountHidden}>
+                  <div className={mountAddressHidden}>
+                    <h2>At what address will we be MOUNTING?</h2>
+                    <TextArea
+                      id="destination"
+                      name="destination"
+                      onChange={this.handleInputChange.bind(this)}
+                      placeholder="Enter your new address"
+                      required
+                      value={this.state.destination}
+                      style={{ width: "35vw" }}
+                      rows={3}
+                    />
+                  </div>
+                  <br></br>
+                  <div className={mountDetailsHidden}>
+                    <h2>Which items will we be MOUNTING?</h2>
+                    <TextArea
+                      id="mountDetails"
+                      name="mountDetails"
+                      onChange={this.handleInputChange.bind(this)}
+                      placeholder="Details"
+                      value={this.state.mountDetails}
+                      style={{ width: "35vw" }}
+                      rows={3}
+                    />
+                  </div>
                 </div>
-                <br></br>
-                <div className={unpackBedroomsHidden}>
-                  <h2>How many bedrooms will we be UNPACKING</h2>
-                  <TextArea
-                    id="unpackBedrooms"
-                    name="unpackBedrooms"
-                    onChange={this.handleInputChange.bind(this)}
-                    placeholder="##"
-                    value={this.state.unpackBedrooms}
-                    style={{ width: "100%" }}
-                    rows={1}
-                  />
-                </div>
-                <div className={unpackSpecialHidden}>
-                  <h2>Are there any items that need special care?</h2>
-                  <TextArea
-                    id="special"
-                    name="special"
-                    onChange={this.handleInputChange.bind(this)}
-                    placeholder="Special care items"
-                    value={this.state.special}
-                    style={{ width: "35vw" }}
-                    rows={3}
-                  />
-                </div>
-                <br></br>
-                <div className={unpackSpecialHidden}>
-                  <h2>Is there anything else we should know?</h2>
-                  <TextArea
-                    id="details"
-                    name="details"
-                    onChange={this.handleInputChange.bind(this)}
-                    placeholder="Details"
-                    value={this.state.details}
-                    style={{ width: "35vw" }}
-                    rows={3}
-                  />
-                </div>
-                <div className={unpackBoxesHidden}>
-                  <h2>About how many boxes will we be UNPACKING?</h2>
-                  <TextArea
-                    id="unpackBoxes"
-                    name="unpackBoxes"
-                    onChange={this.handleInputChange.bind(this)}
-                    placeholder="##"
-                    value={this.state.unpackBoxes}
-                    style={{ width: "100%" }}
-                    rows={1}
-                  />
-                </div>
-              </div>
-              <div className={mountHidden}>
-                <div className={mountAddressHidden}>
-                  <h2>At what address will we be MOUNTING?</h2>
-                  <TextArea
-                    id="destination"
-                    name="destination"
-                    onChange={this.handleInputChange.bind(this)}
-                    placeholder="Enter your new address"
-                    required
-                    value={this.state.destination}
-                    style={{ width: "35vw" }}
-                    rows={3}
-                  />
-                </div>
-                <br></br>
-                <div className={mountDetailsHidden}>
-                  <h2>Which items will we be MOUNTING?</h2>
-                  <TextArea
-                    id="mountDetails"
-                    name="mountDetails"
-                    onChange={this.handleInputChange.bind(this)}
-                    placeholder="Details"
-                    value={this.state.mountDetails}
-                    style={{ width: "35vw" }}
-                    rows={3}
-                  />
-                </div>
-              </div>
-              <div className="mmc-detailsq">
-                <div className={mmcDetailsHidden}>
-                  <h2>Is there anything else we should know about the move?</h2>
-                  <TextArea
-                    id="details"
-                    name="details"
-                    onChange={this.handleInputChange.bind(this)}
-                    placeholder="Details"
-                    value={this.state.details}
-                    style={{ width: "35vw" }}
-                    rows={3}
-                  />
-                </div>
-              </div>
-              <div className="mum-detailsq">
-                <div className={mumDetailsHidden}>
-                  <h2>Is there anything else we should know about the move?</h2>
-                  <TextArea
-                    id="details"
-                    name="details"
-                    onChange={this.handleInputChange.bind(this)}
-                    placeholder="Details"
-                    value={this.state.details}
-                    style={{ width: "35vw" }}
-                    rows={3}
-                  />
-                </div>
+                {/* <div className="mmc-detailsq">
+                  <div className={mmcDetailsHidden}>
+                    <h2>Is there anything else we should know about the move?</h2>
+                    <TextArea
+                      id="details"
+                      name="details"
+                      onChange={this.handleInputChange.bind(this)}
+                      placeholder="Details"
+                      value={this.state.details}
+                      style={{ width: "35vw" }}
+                      rows={3}
+                    />
+                  </div>
+                </div> */}
+                {/* <div className="mum-detailsq">
+                  <div className={mumDetailsHidden}>
+                    <h2>Is there anything else we should know about the move?</h2>
+                    <TextArea
+                      id="details"
+                      name="details"
+                      onChange={this.handleInputChange.bind(this)}
+                      placeholder="Details"
+                      value={this.state.details}
+                      style={{ width: "35vw" }}
+                      rows={3}
+                    />
+                  </div> */}
+                {/* </div> */}
               </div>
             </div>
             <div className="btn-row row">

@@ -755,6 +755,13 @@ Textarea {
   text-align: center;
   width: 100vw;
 }
+.mount-detailsq {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  width: 100vw;
+  /* border: 2px solid black; */
+}
 .packorunpack-bedroomsq {
   /* border: 2px solid green; */
   display: flex;
@@ -778,10 +785,12 @@ Textarea {
 .pack-row {
   display: flex;
   justify-content: center;
+  width: 100vw;
 }
 .unpack-row {
   display: flex;
   justify-content: center;
+  width: 100vw;
 }
 .detailsq {
   display: flex;
@@ -819,10 +828,8 @@ Textarea {
 }
 .mount-row {
   display: flex;
-  justify-content: space-around;
-  text-align: center;
-  /* border: 2px solid white; */
-  align-items: center;
+  justify-content: center;
+  width: 100vw;
 }
 .mount-row h2 {
   text-align: right;
