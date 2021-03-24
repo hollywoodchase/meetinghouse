@@ -38,10 +38,13 @@ class Estimate extends Component {
       currentBedrooms: "",
       bedroom1: "",
       bedroom2: "",
+      livingroom: "",
       kitchen: "",
       basement: "",
+      outdoor: "",
       bedroom3: "",
       bedroom4: "",
+      storage: "",
       destination: "",
       destinationType: "",
       destinationFloor: "",
@@ -286,10 +289,13 @@ class Estimate extends Component {
       currentBedrooms: this.state.currentBedrooms,
       bedroom1: this.state.bedroom1,
       bedroom2: this.state.bedroom2,
+      livingroom: this.state.livingroom,
       kitchen: this.state.kitchen,
       basement: this.state.basement,
+      outdoor: this.state.outdoor,
       bedroom3: this.state.bedroom3,
       bedroom4: this.state.bedroom4,
+      storage: this.state.storage,
       destination: this.state.destination,
       destinationType: this.state.destinationType,
       destinationFloor: this.state.destinationFloor,
@@ -337,10 +343,11 @@ class Estimate extends Component {
     const destinationElevatorTimeHidden = this.state.destinationElevator === "true" ? 'infoq destination-elevator-timeq row' : 'hidden';
     const destinationFloorHidden = this.state.destinationElevator === "false" ? "infoq destination-floorq row" : 'hidden';
     const currentElevatorTimeHidden = this.state.currentElevator === "true" ? 'infoq current-elevator-timeq row' : 'hidden';
-    const currentFloorHidden = this.state.currentElevator === "false"  || this.state.currentType === "house" ? "infoq current-floorq row" : 'hidden';
+    const currentFloorHidden = this.state.currentElevator === "false" || this.state.currentType === "house" ? "infoq current-floorq row" : 'hidden';
     const movingDetailsHidden = this.state.isMoving ? 'infoq detailsq' : 'hidden';
     const boxesHidden = this.state.isPacking ? 'hidden' : 'infoq boxesq';
-    const unpackSpecialHidden = this.state.isUnpacking && (this.state.isPacking || this.state.isCrating || this.state.isMounting) ? 'hidden' : "infoq unpack-specialq";
+    const packSpecialHidden = this.state.isPacking && !this.state.isMoving && (this.state.isUnpacking || this.state.isCrating || this.state.isMounting) ? "infoq pack-specialq" : 'hidden';
+    const unpackSpecialHidden = this.state.isUnpacking && !this.state.isMoving && (this.state.isPacking || this.state.isCrating || this.state.isMounting) ? "infoq unpack-specialq" : 'hidden';
     const packAddressHidden = this.state.isMoving && this.state.isPacking ? 'hidden' : "infoq pack-addressq row";
     const packBedroomsHidden = this.state.isMoving && this.state.isPacking ? 'hidden' : "infoq pack-bedroomsq row";
     const unpackBedroomsHidden = this.state.isMoving && this.state.isUnpacking ? 'hidden' : "infoq unpack-bedroomsq row";
@@ -350,8 +357,9 @@ class Estimate extends Component {
     const mmcDetailsHidden = this.state.isMoving && this.state.isMounting && this.state.isCrating ? 'infoq detailsq' : 'hidden';
     const mumDetailsHidden = this.state.isMoving && this.state.isUnpacking && this.state.isMounting && !this.state.isCrating ? 'infoq detailsq' : 'hidden';
     const packMoveHidden = this.state.isMoving && this.state.isPacking ? 'hidden' : "infoq pack-detailsq";
-    const leftChecksHidden = this.state.isMoving ? "left-checks" : 'hidden';
+    // const leftChecksHidden = this.state.isMoving ? "left-checks" : 'hidden';
     const officesHidden = this.state.currentType === "office" ? "infoq current-officesq row" : "hidden";
+    const storageHidden = this.state.currentType === "storage" ? "infoq current-storageq row" : "hidden";
     const currentBedroomsHidden = this.state.currentType === "house" || this.state.currentType === "apartment" ? "infoq current-bedroomsq row" : "hidden";
     const inventory1BHidden = this.state.currentBedrooms === "1" ? "infoq inventory1bq row" : "hidden";
     const inventory2BHidden = this.state.currentBedrooms === "2" ? "infoq inventory2bq row" : "hidden";
@@ -388,7 +396,7 @@ class Estimate extends Component {
             </div>
             <div className="checkboxes-row row">
               <div className="boxes">
-                <div className={leftChecksHidden}>
+                <div className="left-checks">
                   <input type="checkbox" id="packing-check" className="check" name="packing" value="packing" onClick={this.handleInputChange} />
                   <label htmlFor="packing-check" className="packing-text">Packing</label>
 
@@ -557,6 +565,20 @@ class Estimate extends Component {
                   </label>
                     </div>
 
+                  </div>
+                  <div className={storageHidden}>
+                    <h2>What items are we taking from storage?</h2>
+                    <div className="storageinventory-choices">
+                      <TextArea
+                        id="storage"
+                        name="storage"
+                        onChange={this.handleInputChange.bind(this)}
+                        placeholder="Storage Items"
+                        value={this.state.storage}
+                        style={{ width: "60vw" }}
+                        rows={2}
+                      />
+                    </div>
                   </div>
                   <div className={officesHidden}>
                     <h2>How many offices are we moving?</h2>
@@ -811,10 +833,19 @@ class Estimate extends Component {
                         rows={2}
                       />
                       <TextArea
+                        id="livingroom"
+                        name="livingroom"
+                        onChange={this.handleInputChange.bind(this)}
+                        placeholder="Living Room Items"
+                        value={this.state.livingroom}
+                        style={{ width: "60vw" }}
+                        rows={2}
+                      />
+                      <TextArea
                         id="kitchen"
                         name="kitchen"
                         onChange={this.handleInputChange.bind(this)}
-                        placeholder="Kitchen Items"
+                        placeholder="Kitchen/Dining Room Items"
                         value={this.state.kitchen}
                         style={{ width: "60vw" }}
                         rows={2}
@@ -823,8 +854,17 @@ class Estimate extends Component {
                         id="basement"
                         name="basement"
                         onChange={this.handleInputChange.bind(this)}
-                        placeholder="Basement Items"
+                        placeholder="Basement/Storage Items"
                         value={this.state.basement}
+                        style={{ width: "60vw" }}
+                        rows={2}
+                      />
+                      <TextArea
+                        id="outdoor"
+                        name="outdoor"
+                        onChange={this.handleInputChange.bind(this)}
+                        placeholder="Outdoor Items"
+                        value={this.state.outdoor}
                         style={{ width: "60vw" }}
                         rows={2}
                       />
@@ -844,10 +884,19 @@ class Estimate extends Component {
                         rows={2}
                       />
                       <TextArea
+                        id="livingroom"
+                        name="livingroom"
+                        onChange={this.handleInputChange.bind(this)}
+                        placeholder="Living Room Items"
+                        value={this.state.livingroom}
+                        style={{ width: "60vw" }}
+                        rows={2}
+                      />
+                      <TextArea
                         id="kitchen"
                         name="kitchen"
                         onChange={this.handleInputChange.bind(this)}
-                        placeholder="Kitchen Items"
+                        placeholder="Kitchen/Dining Room Items"
                         value={this.state.kitchen}
                         style={{ width: "60vw" }}
                         rows={2}
@@ -856,8 +905,17 @@ class Estimate extends Component {
                         id="basement"
                         name="basement"
                         onChange={this.handleInputChange.bind(this)}
-                        placeholder="Basement Items"
+                        placeholder="Basement/Storage Items"
                         value={this.state.basement}
+                        style={{ width: "60vw" }}
+                        rows={2}
+                      />
+                      <TextArea
+                        id="outdoor"
+                        name="outdoor"
+                        onChange={this.handleInputChange.bind(this)}
+                        placeholder="Outdoor Items"
+                        value={this.state.outdoor}
                         style={{ width: "60vw" }}
                         rows={2}
                       />
@@ -885,10 +943,19 @@ class Estimate extends Component {
                         rows={2}
                       />
                       <TextArea
+                        id="livingroom"
+                        name="livingroom"
+                        onChange={this.handleInputChange.bind(this)}
+                        placeholder="Living Room Items"
+                        value={this.state.livingroom}
+                        style={{ width: "60vw" }}
+                        rows={2}
+                      />
+                      <TextArea
                         id="kitchen"
                         name="kitchen"
                         onChange={this.handleInputChange.bind(this)}
-                        placeholder="Kitchen Items"
+                        placeholder="Kitchen/Dining Room Items"
                         value={this.state.kitchen}
                         style={{ width: "60vw" }}
                         rows={2}
@@ -897,8 +964,17 @@ class Estimate extends Component {
                         id="basement"
                         name="basement"
                         onChange={this.handleInputChange.bind(this)}
-                        placeholder="Basement Items"
+                        placeholder="Basement/Storage Items"
                         value={this.state.basement}
+                        style={{ width: "60vw" }}
+                        rows={2}
+                      />
+                      <TextArea
+                        id="outdoor"
+                        name="outdoor"
+                        onChange={this.handleInputChange.bind(this)}
+                        placeholder="Outdoor Items"
+                        value={this.state.outdoor}
                         style={{ width: "60vw" }}
                         rows={2}
                       />
@@ -936,10 +1012,19 @@ class Estimate extends Component {
                         rows={2}
                       />
                       <TextArea
+                        id="livingroom"
+                        name="livingroom"
+                        onChange={this.handleInputChange.bind(this)}
+                        placeholder="Living Room Items"
+                        value={this.state.livingroom}
+                        style={{ width: "60vw" }}
+                        rows={2}
+                      />
+                      <TextArea
                         id="kitchen"
                         name="kitchen"
                         onChange={this.handleInputChange.bind(this)}
-                        placeholder="Kitchen Items"
+                        placeholder="Kitchen/Dining Room Items"
                         value={this.state.kitchen}
                         style={{ width: "60vw" }}
                         rows={2}
@@ -948,8 +1033,17 @@ class Estimate extends Component {
                         id="basement"
                         name="basement"
                         onChange={this.handleInputChange.bind(this)}
-                        placeholder="Basement Items"
+                        placeholder="Basement/Storage Items"
                         value={this.state.basement}
+                        style={{ width: "60vw" }}
+                        rows={2}
+                      />
+                      <TextArea
+                        id="outdoor"
+                        name="outdoor"
+                        onChange={this.handleInputChange.bind(this)}
+                        placeholder="Outdoor Items"
+                        value={this.state.outdoor}
                         style={{ width: "60vw" }}
                         rows={2}
                       />
@@ -1123,7 +1217,7 @@ class Estimate extends Component {
                   </div>
                   <br></br>
                   <div className={boxesHidden}>
-                  <h2>About how many boxes will we be moving?</h2>
+                    <h2>About how many boxes will we be moving?</h2>
                     <div className="radio">
                       <label>
                         <input
@@ -1223,7 +1317,7 @@ class Estimate extends Component {
                     />
                   </div>
                 </div>
-                {/* <div className={packHidden}>
+                <div className={packHidden}>
                   <div className={packAddressHidden}>
                     <h2>At what address will we be PACKING?</h2>
                     <TextArea
@@ -1237,8 +1331,8 @@ class Estimate extends Component {
                       rows={3}
                     />
                   </div>
-                  <br></br> */}
-                  {/* <div className={packBedroomsHidden}>
+                  <br></br>
+                  <div className={packBedroomsHidden}>
                     <h2>How many bedrooms will we be PACKING</h2>
                     <TextArea
                       id="packBedrooms"
@@ -1250,7 +1344,7 @@ class Estimate extends Component {
                       rows={1}
                     />
                   </div>
-                  <div className="infoq pack-specialq">
+                  <div className={packSpecialHidden}>
                     <h2>Are there any items that need special care?</h2>
                     <TextArea
                       id="special"
@@ -1262,8 +1356,8 @@ class Estimate extends Component {
                       rows={3}
                     />
                   </div>
-                  <br></br> */}
-                  {/* <div className={packMoveHidden}>
+                  <br></br>
+                  <div className={packMoveHidden}>
                     <h2>Is there anything else we should know?</h2>
                     <TextArea
                       id="details"
@@ -1274,8 +1368,8 @@ class Estimate extends Component {
                       style={{ width: "100%" }}
                       rows={3}
                     />
-                  </div> */}
-                {/* </div> */}
+                  </div>
+                </div>
               </div>
               <div className={crateHidden}>
                 <div className={crateAddressHidden}>
@@ -1305,7 +1399,7 @@ class Estimate extends Component {
                   />
                 </div>
               </div>
-              {/* <div className={unpackHidden}>
+              <div className={unpackHidden}>
                 <div className={unpackAddressHidden}>
                   <h2>At what address will we be UNPACKING?</h2>
                   <TextArea
@@ -1318,9 +1412,9 @@ class Estimate extends Component {
                     style={{ width: "100%" }}
                     rows={3}
                   />
-                </div> */}
-                {/* <br></br> */}
-                {/* <div className={unpackBedroomsHidden}>
+                </div>
+                <br></br>
+                <div className={unpackBedroomsHidden}>
                   <h2>How many bedrooms will we be UNPACKING</h2>
                   <TextArea
                     id="unpackBedrooms"
@@ -1330,9 +1424,9 @@ class Estimate extends Component {
                     value={this.state.unpackBedrooms}
                     style={{ width: "100%" }}
                     rows={1}
-                  /> */}
-                {/* </div> */}
-                {/* <div className={unpackSpecialHidden}>
+                  />
+                </div>
+                <div className={unpackSpecialHidden}>
                   <h2>Are there any items that need special care?</h2>
                   <TextArea
                     id="special"
@@ -1343,8 +1437,8 @@ class Estimate extends Component {
                     style={{ width: "35vw" }}
                     rows={3}
                   />
-                </div> */}
-                {/* <br></br>
+                </div>
+                <br></br>
                 <div className={unpackSpecialHidden}>
                   <h2>Is there anything else we should know?</h2>
                   <TextArea
@@ -1356,8 +1450,8 @@ class Estimate extends Component {
                     style={{ width: "35vw" }}
                     rows={3}
                   />
-                </div> */}
-                {/* <div className={unpackBoxesHidden}>
+                </div>
+                <div className={unpackBoxesHidden}>
                   <h2>About how many boxes will we be UNPACKING?</h2>
                   <TextArea
                     id="unpackBoxes"
@@ -1368,8 +1462,8 @@ class Estimate extends Component {
                     style={{ width: "100%" }}
                     rows={1}
                   />
-                </div> */}
-              {/* </div> */}
+                </div>
+              </div>
               <div className={mountHidden}>
                 <div className={mountAddressHidden}>
                   <h2>At what address will we be MOUNTING?</h2>

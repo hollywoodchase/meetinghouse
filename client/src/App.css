@@ -794,6 +794,13 @@ Textarea {
   /* height: 18vh; */
   /* border: 2px solid purple; */
 }
+.current-storageq {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* height: 18vh; */
+  /* border: 2px solid purple; */
+}
 .crate-row {
   display: flex;
   justify-content: center;
