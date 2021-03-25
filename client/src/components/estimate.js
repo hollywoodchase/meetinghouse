@@ -341,7 +341,7 @@ class Estimate extends Component {
     const crateHidden = this.state.isCrating ? 'crate-row row' : 'hidden';
     const crateAddressHidden = this.state.isCrating && !this.state.isMoving && !this.state.isPacking ? 'infoq crate-addressq' : 'hidden';
     const destinationElevatorTimeHidden = this.state.destinationElevator === "true" ? 'infoq destination-elevator-timeq row' : 'hidden';
-    const destinationFloorHidden = this.state.destinationElevator !== "true" ? "infoq destination-floorq row" : 'hidden';
+    const destinationFloorHidden = this.state.isMoving && this.state.destinationElevator !== "true" ? "infoq destination-floorq row" : 'hidden';
     const currentElevatorTimeHidden = this.state.currentElevator === "true" ? 'infoq current-elevator-timeq row' : 'hidden';
     const currentFloorHidden = this.state.currentElevator === "false" || this.state.currentType === "house" ? "infoq current-floorq row" : 'hidden';
     const movingDetailsHidden = this.state.isMoving ? 'infoq detailsq' : 'hidden';
