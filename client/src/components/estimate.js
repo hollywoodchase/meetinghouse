@@ -1086,10 +1086,10 @@ class Estimate extends Component {
                           type="radio"
                           value={"house"}
                           name="destinationType"
-                          default-checked={this.state.destinationType}
+                          default-checked={!this.state.destinationType}
                           onChange={this.handleDetailChange}
                         />House
-                  </label>
+                      </label>
                       <br></br>
                       <label>
                         <input
@@ -1099,7 +1099,7 @@ class Estimate extends Component {
                           default-checked={!this.state.destinationType}
                           onChange={this.handleDetailChange}
                         />Apartment
-                  </label>
+                      </label>
                       <br></br>
                       <label>
                         <input
@@ -1109,7 +1109,7 @@ class Estimate extends Component {
                           default-checked={!this.state.destinationType}
                           onChange={this.handleDetailChange}
                         />Office Building
-                  </label>
+                      </label>
                       <br></br>
                       <label>
                         <input
@@ -1119,7 +1119,7 @@ class Estimate extends Component {
                           default-checked={!this.state.destinationType}
                           onChange={this.handleDetailChange}
                         />Storage Facility/Garage
-                  </label>
+                      </label>
                     </div>
                   </div>
                   <br></br>
