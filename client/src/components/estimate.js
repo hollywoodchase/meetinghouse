@@ -312,7 +312,7 @@ class Estimate extends Component {
       crateDetails: this.state.crateDetails
     };
 
-    emailjs.send('service_sjr0rtg', 'template_6anpryf', templateParams, "user_qTQVb1Mi2sLqR3u3F6FM2")
+    emailjs.send('service_g8so2uu', 'template_3eldqrj', templateParams, "user_v8UtuJI3RRPqluEnZJAbo")
       .then(function (response) {
         console.log('SUCCESS!', response.status, response.text);
       }, function (err) {
@@ -1119,7 +1119,7 @@ class Estimate extends Component {
                           default-checked={!this.state.destinationType}
                           onChange={this.handleDetailChange}
                         />Storage Facility/Garage
-                      </label>
+                     </label>
                     </div>
                   </div>
                   <br></br>
